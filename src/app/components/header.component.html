@@ -1,0 +1,77 @@
+<div id="announcement-bar" [hidden]="!announcementVisible()" class="bg-brand-gold text-brand-blue py-2 px-4 relative z-50 text-sm font-semibold shadow-md">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-center sm:justify-between items-center gap-2 text-center sm:text-left">
+            <div class="flex items-center gap-2">
+                <span class="relative flex h-3 w-3">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-blue opacity-75"></span>
+                  <span class="relative inline-flex rounded-full h-3 w-3 bg-brand-blue"></span>
+                </span>
+                <span>New Career Opportunities Available - Register Today!</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="#opportunities" class="inline-flex items-center gap-1.5 bg-brand-blue text-white px-4 py-1 rounded-full text-xs hover:bg-brand-lightBlue transition-colors shadow-sm">
+                    View Opportunities <svg class="icon " aria-hidden="true" focusable="false"><use href="/icons.svg#solid-arrow-right" /></svg>
+                </a>
+                <button (click)="announcementVisible.set(false)" aria-label="Dismiss announcement" type="button" class="text-brand-blue/70 hover:text-brand-blue focus:outline-none">
+                    <svg class="icon " aria-hidden="true" focusable="false"><use href="/icons.svg#solid-times" /></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <header class="glass sticky top-0 z-40 border-b border-gray-200 transition-all duration-300" id="main-header">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+
+                <a href="#home" aria-label="Peak Axis Global home" class="flex-shrink-0 flex items-center py-2">
+
+                    <div class="flex items-center gap-3 transition-transform hover:scale-105">
+                        <div class="relative w-12 h-12 flex items-center justify-center rounded-full border-2 border-brand-blue border-r-brand-gold bg-white shadow-sm">
+                            <span class="text-2xl font-bold text-brand-blue italic font-heading pr-1">P<span class="text-brand-gold relative -ml-1">A</span></span>
+                            <svg class="icon absolute top-0 right-0 text-brand-gold text-[10px] -mt-1 -mr-1" aria-hidden="true" focusable="false"><use href="/icons.svg#solid-star" /></svg>
+                        </div>
+                        <div class="flex flex-col leading-tight">
+                            <span class="text-xl md:text-2xl font-extrabold text-brand-blue tracking-tight font-heading">PEAK AXIS</span>
+                            <span class="text-[9px] md:text-[10px] text-brand-goldDark font-bold tracking-[0.15em] uppercase">Global Solutions Pvt Ltd</span>
+                        </div>
+                    </div>
+                </a>
+
+                <nav aria-label="Main navigation" class="hidden lg:flex space-x-1 items-center">
+                    <a href="#home" class="text-brand-blue font-bold px-3 py-2 rounded-md hover:bg-brand-accent transition-colors">Home</a>
+                    <a href="#about" class="text-slate-600 font-medium px-3 py-2 rounded-md hover:text-brand-blue hover:bg-brand-accent transition-colors">About Us</a>
+                    <a href="#training" class="text-slate-600 font-medium px-3 py-2 rounded-md hover:text-brand-blue hover:bg-brand-accent transition-colors">Training</a>
+                    <a href="#services" class="text-slate-600 font-medium px-3 py-2 rounded-md hover:text-brand-blue hover:bg-brand-accent transition-colors">Services</a>
+                    <a href="#opportunities" class="text-slate-600 font-medium px-3 py-2 rounded-md hover:text-brand-blue hover:bg-brand-accent transition-colors">Opportunities</a>
+                    <a href="#contact" class="text-slate-600 font-medium px-3 py-2 rounded-md hover:text-brand-blue hover:bg-brand-accent transition-colors">Contact</a>
+                    
+                    <div class="pl-4 ml-2 border-l border-gray-200 flex items-center gap-3">
+                        <a [href]="site.whatsappHref" class="text-slate-600 hover:text-brand-blue font-medium"><svg class="icon text-green-500 text-lg" aria-hidden="true" focusable="false"><use href="/icons.svg#brands-whatsapp" /></svg> {{ site.phone }}</a>
+                        <a href="#registration" class="bg-brand-blue text-white px-5 py-2.5 rounded-lg font-bold hover:bg-brand-lightBlue transition-all shadow-md flex items-center gap-2">
+                            Register Now <svg class="icon text-sm" aria-hidden="true" focusable="false"><use href="/icons.svg#solid-user-plus" /></svg>
+                        </a>
+                    </div>
+                </nav>
+
+                <div class="lg:hidden flex items-center gap-4">
+                    <a href="#registration" class="bg-brand-blue text-white px-3 py-1.5 rounded-md text-sm font-bold">Register</a>
+                    <button id="mobile-menu-btn" type="button" (click)="menuOpen.set(!menuOpen())" aria-label="Toggle navigation" aria-controls="mobile-menu" [attr.aria-expanded]="menuOpen()" class="text-brand-blue hover:bg-slate-100 p-2 rounded-md focus:outline-none transition-colors">
+                        <svg class="icon text-2xl" aria-hidden="true" focusable="false"><use href="/icons.svg#solid-bars" /></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobile-menu" [hidden]="!menuOpen()" (click)="menuOpen.set(false)" class="lg:hidden bg-white border-t border-gray-100 absolute w-full shadow-xl">
+            <div class="px-4 pt-2 pb-6 space-y-1 sm:px-6">
+                <a href="#home" class="block px-3 py-3 text-base font-bold text-brand-blue bg-brand-accent rounded-lg">Home</a>
+                <a href="#about" class="block px-3 py-3 text-base font-medium text-slate-600 hover:text-brand-blue hover:bg-slate-50 rounded-lg">About Us</a>
+                <a href="#training" class="block px-3 py-3 text-base font-medium text-slate-600 hover:text-brand-blue hover:bg-slate-50 rounded-lg">Training Programs</a>
+                <a href="#services" class="block px-3 py-3 text-base font-medium text-slate-600 hover:text-brand-blue hover:bg-slate-50 rounded-lg">Our Services</a>
+                <a href="#opportunities" class="block px-3 py-3 text-base font-medium text-slate-600 hover:text-brand-blue hover:bg-slate-50 rounded-lg">Opportunities</a>
+                <a href="#contact" class="block px-3 py-3 text-base font-medium text-slate-600 hover:text-brand-blue hover:bg-slate-50 rounded-lg">Contact Us</a>
+                <div class="pt-4 mt-2 border-t border-gray-100 flex justify-between items-center px-3">
+                    <a href="{{ site.whatsappHref }}" class="text-brand-blue font-bold flex items-center gap-2"><svg class="icon text-green-500 text-xl" aria-hidden="true" focusable="false"><use href="/icons.svg#brands-whatsapp" /></svg> Chat with us</a>
+                </div>
+            </div>
+        </div>
+    </header>

@@ -1,0 +1,43 @@
+{
+  "name": "peak-axis-global",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "prestart": "node scripts/generate-seo.mjs",
+    "start": "ng serve",
+    "prebuild": "node scripts/generate-seo.mjs",
+    "build": "ng build --configuration production",
+    "preview": "node scripts/preview.mjs",
+    "check:seo": "node scripts/check-seo.mjs",
+    "test:e2e": "playwright test"
+  },
+  "engines": { "node": "^22.22.3 || ^24.15.0 || >=26.0.0" },
+  "dependencies": {
+    "@angular/common": "22.2.1",
+    "@angular/compiler": "22.2.1",
+    "@angular/core": "22.2.1",
+    "@angular/forms": "22.2.1",
+    "@angular/platform-browser": "22.2.1",
+    "@angular/platform-server": "22.2.1",
+    "@angular/router": "22.2.1",
+    "@angular/ssr": "22.2.1",
+    "rxjs": "^7.8.2",
+    "tslib": "^2.8.1"
+  },
+  "devDependencies": {
+    "@angular/build": "22.2.1",
+    "@angular/cli": "22.2.1",
+    "@angular/compiler-cli": "22.2.1",
+    "@fontsource-variable/inter": "^5.2.0",
+    "@fontsource/poppins": "^5.2.0",
+    "@fortawesome/free-brands-svg-icons": "^7.0.0",
+    "@fortawesome/free-regular-svg-icons": "^7.0.0",
+    "@fortawesome/free-solid-svg-icons": "^7.0.0",
+    "@playwright/test": "^1.56.0",
+    "autoprefixer": "^10.4.22",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.19",
+    "typescript": "~6.0.0"
+  }
+}

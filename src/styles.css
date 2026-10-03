@@ -1,0 +1,41 @@
+@font-face {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/inter-latin-wght-normal.woff2') format('woff2');
+}
+@font-face { font-family: Poppins; font-style: normal; font-weight: 500; font-display: swap; src: url('/fonts/poppins-latin-500-normal.woff2') format('woff2'); }
+@font-face { font-family: Poppins; font-style: normal; font-weight: 600; font-display: swap; src: url('/fonts/poppins-latin-600-normal.woff2') format('woff2'); }
+@font-face { font-family: Poppins; font-style: normal; font-weight: 700; font-display: swap; src: url('/fonts/poppins-latin-700-normal.woff2') format('woff2'); }
+@font-face { font-family: Poppins; font-style: normal; font-weight: 800; font-display: swap; src: url('/fonts/poppins-latin-800-normal.woff2') format('woff2'); }
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html { scroll-behavior: smooth; scroll-padding-top: 6rem; }
+body { @apply bg-slate-50 text-slate-700 font-sans antialiased overflow-x-hidden; }
+::selection { background-color: #0a2540; color: #fff; }
+app-root { display: block; }
+app-header { display: contents; }
+app-hero, app-trust, app-success-stories, app-about, app-training, app-services, app-opportunities, app-registration, app-testimonials, app-footer { display: block; }
+[hidden] { display: none !important; }
+.icon { display: inline-block; height: 1em; width: 1em; vertical-align: -0.125em; fill: currentColor; flex-shrink: 0; }
+.glass { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+.text-gradient { background: linear-gradient(135deg, #0a2540, #1e4a7a); background-clip: text; -webkit-text-fill-color: transparent; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #f8fafc; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, summary:focus-visible { outline: 3px solid #d99e0b; outline-offset: 4px; }
+.skip-link { position: fixed; left: 1rem; top: 1rem; z-index: 100; padding: .75rem 1rem; color: white; background: #0a2540; border-radius: .5rem; transform: translateY(-200%); }
+.skip-link:focus { transform: translateY(0); }
+.form-field { @apply w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand-blue focus:bg-white outline-none transition-colors; }
+.form-label { @apply block text-xs font-bold text-slate-700 mb-1 uppercase tracking-wide; }
+@media (hover: hover) { .animate-scroll-x:hover { animation-play-state: paused; } }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
