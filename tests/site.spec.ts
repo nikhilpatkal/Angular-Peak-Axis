@@ -73,7 +73,7 @@ test('enquiry validates required fields and prepares the actual email draft', as
   await expect(page.getByRole('link', { name: 'Open email draft' })).toBeHidden();
   await page.getByLabel('Full name *').fill('Test Candidate');
   await page.getByLabel('Email address *').fill('candidate@example.com');
-  await page.getByLabel('WhatsApp number *').fill('+91 9876543210');
+  await page.getByLabel('WhatsApp number *').fill('+91 93567 75017');
   await page.getByLabel('Current location *').fill('Pune');
   await page.getByLabel('Qualification & specialization *').fill('B.Pharm');
   await page.getByLabel('Preferred job role or course *').fill('Clinical Research');
@@ -82,7 +82,7 @@ test('enquiry validates required fields and prepares the actual email draft', as
   const draft = page.getByRole('link', { name: 'Open email draft' });
   await expect(draft).toBeVisible();
   const href = await draft.getAttribute('href');
-  expect(href).toContain('mailto:info@peakaxisglobal.com');
+  expect(href).toContain('mailto:peakaxisglobal@gmail.com');
   expect(decodeURIComponent(href!)).toContain('Full name: Test Candidate');
   expect(decodeURIComponent(href!)).toContain('Preferred role or course: Clinical Research');
   await expect(page.getByText('Registration Successful!')).toHaveCount(0);
