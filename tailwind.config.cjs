@@ -1,5 +1,5 @@
 module.exports = {
-  content: ['./src/**/*.{html,ts}'],
+  content: { relative: true, files: ['./src/**/*.{html,ts}'] },
   theme: {
     extend: {
       fontFamily: { sans: ['Inter', 'sans-serif'], heading: ['Poppins', 'sans-serif'] },
