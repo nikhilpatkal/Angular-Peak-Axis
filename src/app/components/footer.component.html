@@ -1,24 +1,34 @@
 <footer id="contact" class="bg-brand-blue pt-20 border-t-[8px] border-brand-gold">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-10">
 
-            <div class="grid md:grid-cols-3 gap-6 -mt-32 mb-16 relative z-20">
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 -mt-32 mb-16 relative z-20">
                 <div class="bg-white rounded-xl p-6 shadow-premium border-t-4 border-green-500 text-center group hover:-translate-y-1 transition-transform">
                     <div class="w-12 h-12 bg-green-50 text-green-500 rounded-full flex items-center justify-center mx-auto text-xl mb-4 group-hover:bg-green-500 group-hover:text-white transition-colors"><svg class="icon " aria-hidden="true" focusable="false"><use href="/icons.svg#brands-whatsapp" /></svg></div>
-                    <h4 class="font-bold text-slate-900 mb-1">WhatsApp Us</h4>
-                    <p class="text-slate-600 font-medium mb-3">{{ site.phone }}</p>
-                    <a href="{{ site.whatsappHref }}" class="text-sm font-bold text-green-600 hover:underline">Chat Now</a>
+                    <h4 class="font-bold text-slate-900 mb-2">Contact Us</h4>
+                    <div class="mb-3 flex flex-col gap-1 text-sm font-medium text-slate-600">
+                        @for (contact of site.contactPhoneLinks; track contact.href) {
+                            <a [href]="contact.href" class="hover:text-green-600">{{ contact.label }}</a>
+                        }
+                    </div>
+                    <a [href]="site.whatsappHref" target="_blank" rel="noopener noreferrer" class="text-sm font-bold text-green-600 hover:underline">WhatsApp Us</a>
+                </div>
+                <div class="bg-white rounded-xl p-6 shadow-premium border-t-4 border-green-500 text-center group hover:-translate-y-1 transition-transform">
+                    <div class="w-12 h-12 bg-green-50 text-green-500 rounded-full flex items-center justify-center mx-auto text-xl mb-4 group-hover:bg-green-500 group-hover:text-white transition-colors"><svg class="icon" aria-hidden="true" focusable="false"><use href="/icons.svg#brands-whatsapp" /></svg></div>
+                    <h4 class="font-bold text-slate-900 mb-1">WhatsApp Channel</h4>
+                    <p class="text-slate-600 text-sm font-medium mb-3">Career updates, resources and announcements</p>
+                    <a [href]="site.whatsappChannel" target="_blank" rel="noopener noreferrer" class="text-sm font-bold text-green-600 hover:underline">Follow Channel</a>
+                </div>
+                <div class="bg-white rounded-xl p-6 shadow-premium border-t-4 border-brand-gold text-center group hover:-translate-y-1 transition-transform">
+                    <div class="w-12 h-12 bg-amber-50 text-brand-goldDark rounded-full flex items-center justify-center mx-auto text-xl mb-4 group-hover:bg-brand-gold group-hover:text-white transition-colors"><svg class="icon " aria-hidden="true" focusable="false"><use href="/icons.svg#solid-users" /></svg></div>
+                    <h4 class="font-bold text-slate-900 mb-1">WhatsApp Community</h4>
+                    <p class="text-slate-600 text-sm font-medium mb-3">Connect for opportunities and community updates</p>
+                    <a [href]="site.whatsappCommunity" target="_blank" rel="noopener noreferrer" class="text-sm font-bold text-brand-goldDark hover:underline">Join Community</a>
                 </div>
                 <div class="bg-white rounded-xl p-6 shadow-premium border-t-4 border-blue-500 text-center group hover:-translate-y-1 transition-transform">
                     <div class="w-12 h-12 bg-blue-50 text-blue-500 rounded-full flex items-center justify-center mx-auto text-xl mb-4 group-hover:bg-blue-500 group-hover:text-white transition-colors"><svg class="icon " aria-hidden="true" focusable="false"><use href="/icons.svg#solid-envelope" /></svg></div>
                     <h4 class="font-bold text-slate-900 mb-1">Email Us</h4>
-                    <p class="text-slate-600 font-medium mb-3">{{ site.email }}</p>
+                    <p class="text-slate-600 text-sm font-medium mb-3 break-all">{{ site.email }}</p>
                     <a [href]="site.emailHref" class="text-sm font-bold text-blue-600 hover:underline">Send Email</a>
-                </div>
-                <div class="bg-white rounded-xl p-6 shadow-premium border-t-4 border-brand-gold text-center group hover:-translate-y-1 transition-transform">
-                    <div class="w-12 h-12 bg-amber-50 text-brand-goldDark rounded-full flex items-center justify-center mx-auto text-xl mb-4 group-hover:bg-brand-gold group-hover:text-white transition-colors"><svg class="icon " aria-hidden="true" focusable="false"><use href="/icons.svg#solid-users" /></svg></div>
-                    <h4 class="font-bold text-slate-900 mb-1">Join Community</h4>
-                    <p class="text-slate-600 font-medium mb-3">Daily Updates & Resources</p>
-                    <a [href]="site.whatsappHref" class="text-sm font-bold text-brand-goldDark hover:underline">Ask to Join</a>
                 </div>
             </div>
 
@@ -55,6 +65,8 @@
                     <h4 class="text-white font-bold mb-5 uppercase text-sm tracking-widest">Resources</h4>
                     <ul class="space-y-3 text-sm text-blue-200">
                         <li><a href="#registration" class="hover:text-brand-gold transition-colors">Candidate Enquiry</a></li>
+                        <li><a [href]="site.whatsappChannel" target="_blank" rel="noopener noreferrer" class="hover:text-brand-gold transition-colors">WhatsApp Channel</a></li>
+                        <li><a [href]="site.whatsappCommunity" target="_blank" rel="noopener noreferrer" class="hover:text-brand-gold transition-colors">Join Community</a></li>
                         <li><a [href]="site.emailHref" class="hover:text-brand-gold transition-colors">Interview Preparation</a></li>
                         <li><a [href]="site.emailHref" class="hover:text-brand-gold transition-colors">Verify Certificate</a></li>
                         <li><a [href]="site.emailHref" class="hover:text-brand-gold transition-colors">Blog & News</a></li>

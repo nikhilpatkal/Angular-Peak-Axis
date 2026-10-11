@@ -19,8 +19,8 @@ import { FooterComponent } from './components/footer.component';
     <app-header />
     <main id="main-content" tabindex="-1">
       @defer (hydrate never) { <app-hero /> }
-      @defer (hydrate never) { <app-trust /> }
-      @defer (hydrate never) { <app-success-stories /> }
+      <app-trust />
+      <app-success-stories />
       @defer (hydrate never) { <app-about /> }
       <app-training />
       @defer (hydrate never) { <app-services /> }

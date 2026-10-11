@@ -4,10 +4,10 @@ test('prerendered content is readable with JavaScript disabled', async ({ browse
   const context = await browser.newContext({ javaScriptEnabled: false });
   const page = await context.newPage();
   await page.goto('http://127.0.0.1:4173');
-  await expect(page.getByRole('heading', { level: 1 })).toContainText('Build Your Career in Pune');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('Transform Your Career');
   await expect(page.getByRole('heading', { name: 'Premium Certification Programs' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Pharmacovigilance Trainee' })).toBeVisible();
-  await expect(page.locator('.counter').first()).toHaveText('1000');
+  await expect(page.locator('.counter').first()).toHaveText('1500');
   await context.close();
 });
 
@@ -62,30 +62,76 @@ test('course dialog supports downloads, Escape and focus restoration', async ({ 
   await expect(dialog).toBeHidden();
   await expect(trigger).toBeFocused();
   await page.getByRole('button', { name: 'Syllabus' }).nth(1).click();
-  await expect(dialog).toContainText('MedDRA Coding & Argus Safety');
+  await expect(dialog).toContainText('MedDRA Coding');
+  await expect(dialog).toContainText('Argus Safety Basics');
   await dialog.getByRole('button', { name: 'Close course overview' }).click();
   await expect(dialog).toBeHidden();
 });
 
-test('enquiry validates required fields and prepares the actual email draft', async ({ page }) => {
+test('success stories rotate automatically and support manual navigation', async ({ page }) => {
   await page.goto('/');
-  await page.getByRole('button', { name: 'Prepare Email Enquiry' }).click();
-  await expect(page.getByRole('link', { name: 'Open email draft' })).toBeHidden();
+  const carousel = page.getByRole('region', { name: 'Student placement success stories' });
+  const position = carousel.getByText(/\d \/ 4/);
+  await expect(position).toHaveText('1 / 4');
+  await expect(position).toHaveText('2 / 4', { timeout: 6500 });
+  await carousel.getByRole('button', { name: 'Show next success story' }).click();
+  await expect(position).toHaveText('3 / 4');
+});
+
+test('enquiry validates required fields and submits them to the configured endpoint', async ({ page }) => {
+  let submittedBody = '';
+  await page.route('https://script.google.com/macros/s/**', async route => {
+    submittedBody = route.request().postData() ?? '';
+    await route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ success: true }) });
+  });
+  await page.goto('/');
+  await page.getByRole('button', { name: 'Submit Enquiry' }).click();
+  await expect(page.getByText('Enquiry submitted successfully')).toBeHidden();
   await page.getByLabel('Full name *').fill('Test Candidate');
   await page.getByLabel('Email address *').fill('candidate@example.com');
   await page.getByLabel('WhatsApp number *').fill('+91 93567 75017');
   await page.getByLabel('Current location *').fill('Pune');
   await page.getByLabel('Qualification & specialization *').fill('B.Pharm');
   await page.getByLabel('Preferred job role or course *').fill('Clinical Research');
+  await page.getByLabel('Updated resume *').setInputFiles({
+    name: 'test-resume.pdf',
+    mimeType: 'application/pdf',
+    buffer: Buffer.from('%PDF-1.4 test resume')
+  });
   await page.getByRole('checkbox').check();
-  await page.getByRole('button', { name: 'Prepare Email Enquiry' }).click();
-  const draft = page.getByRole('link', { name: 'Open email draft' });
-  await expect(draft).toBeVisible();
-  const href = await draft.getAttribute('href');
-  expect(href).toContain('mailto:peakaxisglobal@gmail.com');
-  expect(decodeURIComponent(href!)).toContain('Full name: Test Candidate');
-  expect(decodeURIComponent(href!)).toContain('Preferred role or course: Clinical Research');
-  await expect(page.getByText('Registration Successful!')).toHaveCount(0);
+  await page.getByRole('button', { name: 'Submit Enquiry' }).click();
+  await expect(page.getByText('Enquiry submitted successfully')).toBeVisible();
+  expect(submittedBody).toContain('Test Candidate');
+  expect(submittedBody).toContain('candidate@example.com');
+  expect(submittedBody).toContain('Clinical Research');
+  expect(submittedBody).toContain('test-resume.pdf');
+  expect(submittedBody).toContain('JVBERi0xLjQgdGVzdCByZXN1bWU=');
+});
+
+test('enquiry rejects resumes larger than 3 MB before contacting the service', async ({ page }) => {
+  let requestCount = 0;
+  await page.route('https://script.google.com/macros/s/**', async route => {
+    requestCount += 1;
+    await route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ success: true }) });
+  });
+
+  await page.goto('/');
+  await page.getByLabel('Full name *').fill('Test Candidate');
+  await page.getByLabel('Email address *').fill('candidate@example.com');
+  await page.getByLabel('WhatsApp number *').fill('+91 93567 75017');
+  await page.getByLabel('Current location *').fill('Pune');
+  await page.getByLabel('Qualification & specialization *').fill('B.Pharm');
+  await page.getByLabel('Preferred job role or course *').fill('Clinical Research');
+  await page.getByLabel('Updated resume *').setInputFiles({
+    name: 'too-large.pdf',
+    mimeType: 'application/pdf',
+    buffer: Buffer.alloc((3 * 1024 * 1024) + 1)
+  });
+  await page.getByRole('checkbox').check();
+  await page.getByRole('button', { name: 'Submit Enquiry' }).click();
+
+  await expect(page.getByText('Resume must not be larger than 3 MB.')).toBeVisible();
+  expect(requestCount).toBe(0);
 });
 
 test('mobile navigation opens, closes on selection and stays within the viewport', async ({ page }) => {

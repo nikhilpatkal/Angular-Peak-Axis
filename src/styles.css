@@ -26,6 +26,11 @@ app-hero, app-trust, app-success-stories, app-about, app-training, app-services,
 .text-gradient { background: linear-gradient(135deg, #0a2540, #1e4a7a); background-clip: text; -webkit-text-fill-color: transparent; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 .no-scrollbar::-webkit-scrollbar { display: none; }
+.program-scroll { scrollbar-color: #0a2540 #dbe7f2; scrollbar-width: auto; }
+.program-scroll::-webkit-scrollbar { height: 12px; }
+.program-scroll::-webkit-scrollbar-track { background: #dbe7f2; border-radius: 9999px; }
+.program-scroll::-webkit-scrollbar-thumb { background: #0a2540; border: 3px solid #dbe7f2; border-radius: 9999px; }
+.program-scroll::-webkit-scrollbar-thumb:hover { background: #1e4a7a; }
 ::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-track { background: #f8fafc; }
 ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }

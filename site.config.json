@@ -5,8 +5,15 @@
   "title": "Clinical Research & PV Training in Pune | Peak Axis Global",
   "description": "Explore Clinical Research, Pharmacovigilance and Medical Coding courses in Pune with Peak Axis Global. Get industry-focused training and placement assistance.",
   "email": "peakaxisglobal@gmail.com",
+  "enquiryEndpoint": "https://script.google.com/macros/s/AKfycbzr3ZBMD5f7w9ipygER9VeTzyT46PKD3_Ctm3oo1K4QqV5LdTDJWYcS54HtIrTUAeY/exec",
   "phone": "+91 93567 75017",
   "whatsapp": "919356775017",
+  "contactPhones": [
+    "+91 94213 22719",
+    "+91 84591 14179"
+  ],
+  "whatsappChannel": "https://whatsapp.com/channel/0029VbDZs8Z8aKvRLxdJWU3H",
+  "whatsappCommunity": "https://chat.whatsapp.com/H2RzSjWXfT26cKWA4pNvmv",
   "address": {
     "streetAddress": "Phase 1, Hinjawadi Rajiv Gandhi Infotech Park",
     "addressLocality": "Pune",

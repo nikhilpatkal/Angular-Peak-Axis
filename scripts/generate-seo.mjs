@@ -78,7 +78,24 @@ await writeFile('src/index.html', `<!doctype html>
 `);
 await writeFile('public/robots.txt', `User-agent: *\nAllow: /\n\nSitemap: ${base.origin}/sitemap.xml\n`);
 await writeFile('public/sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>${escape(canonical)}</loc></url></urlset>\n`);
+// Build every downloadable overview from the same course data used by the UI.
+// Keep this plain-text output ASCII-safe so it opens cleanly in any editor.
 for (const course of COURSES) {
-  await writeFile(`public/programs/${course.id}.txt`, `${site.shortName}\n${course.name} — Course overview\nDuration: ${course.duration}\n\n${course.topics.map(topic => `• ${topic}`).join('\n')}\n\nThis overview covers the topics listed on our website. Contact our team for the detailed syllabus, current fees and intake dates.\nEmail: ${site.email}\nPhone: ${site.phone}\nWebsite: ${canonical}\n`);
+  const textPrice = course.price.replace('₹', 'INR ');
+  const overview = [
+    site.shortName,
+    `${course.name} - Course overview`,
+    `Program Fee: ${textPrice}`,
+    '',
+    'MODULES',
+    ...course.topics.map(topic => `- ${topic}`),
+    '',
+    'Contact our team for intake dates, delivery format and enrolment details.',
+    `Email: ${site.email}`,
+    `Phone: ${site.phone}`,
+    `Website: ${canonical}`,
+    ''
+  ].join('\n');
+  await writeFile(`public/programs/${course.id}.txt`, overview);
 }
 console.log('Generated SEO metadata, structured data, robots.txt, sitemap.xml and course overviews.');

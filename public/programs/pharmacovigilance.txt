@@ -1,13 +1,25 @@
 Peak Axis Global
-Pharmacovigilance — Course overview
-Duration: 2–3 months
+Advanced Pharmacovigilance Global Certification Program - Course overview
+Program Fee: INR 8,000
 
-• ADR & Case Processing
-• MedDRA Coding & Argus Safety
-• Aggregate Reporting (PSUR)
-• AI in Pharmacovigilance
+MODULES
+- Introduction to Pharmacovigilance
+- ADR Reporting
+- Case Processing
+- ICSR Processing
+- MedDRA Coding
+- Argus Safety Basics
+- Signal Detection
+- SAE & SUSAR Reporting
+- Literature Case Processing
+- Aggregate Reporting (PSUR/PBRER)
+- Global PV Regulations
+- Risk Management Plan (RMP)
+- PV Database Overview
+- AI in Pharmacovigilance
+- Interview Preparation & Resume Building
 
-This overview covers the topics listed on our website. Contact our team for the detailed syllabus, current fees and intake dates.
+Contact our team for intake dates, delivery format and enrolment details.
 Email: peakaxisglobal@gmail.com
 Phone: +91 93567 75017
 Website: https://www.peakaxisglobal.com/

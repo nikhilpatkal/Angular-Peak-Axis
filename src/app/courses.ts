@@ -1,17 +1,229 @@
 export const COURSES = [
   {
-    id: 'clinical-research', name: 'Clinical Research', duration: '3–6 months',
-    description: 'Clinical research training covering clinical trials, pharmacovigilance, clinical data management and AI in pharma clinical research.',
-    topics: ['Clinical Trial Management (CTM)', 'Pharmacovigilance (PV)', 'Clinical Data Management', 'AI in Pharma Clinical Research']
+    id: 'clinical-research',
+    name: 'Global PG Diploma in Clinical Research',
+    shortName: 'Clinical Research',
+    price: '₹25,000',
+    badge: 'All-in-One PG Diploma',
+    icon: 'solid-microscope',
+    description: 'An integrated clinical research program spanning trial management, safety, data, writing and emerging AI applications.',
+    topics: [
+      'Clinical Trial Management (CTM)',
+      'Clinical Data Management (CDM)',
+      'Pharmacovigilance (PV)',
+      'Medical Writing',
+      'ICH-GCP Certification',
+      'AI in Pharma Clinical Research',
+      'Medical Devices in Clinical Research'
+    ]
   },
   {
-    id: 'pharmacovigilance', name: 'Pharmacovigilance', duration: '2–3 months',
-    description: 'Pharmacovigilance training covering adverse drug reactions, case processing, MedDRA coding, Argus Safety and aggregate reporting.',
-    topics: ['ADR & Case Processing', 'MedDRA Coding & Argus Safety', 'Aggregate Reporting (PSUR)', 'AI in Pharmacovigilance']
+    id: 'pharmacovigilance',
+    name: 'Advanced Pharmacovigilance Global Certification Program',
+    shortName: 'Pharmacovigilance',
+    price: '₹8,000',
+    badge: 'Global Certification',
+    icon: 'solid-pills',
+    description: 'Practical drug-safety training from adverse-event intake and case processing to signal detection and global reporting.',
+    topics: [
+      'Introduction to Pharmacovigilance',
+      'ADR Reporting',
+      'Case Processing',
+      'ICSR Processing',
+      'MedDRA Coding',
+      'Argus Safety Basics',
+      'Signal Detection',
+      'SAE & SUSAR Reporting',
+      'Literature Case Processing',
+      'Aggregate Reporting (PSUR/PBRER)',
+      'Global PV Regulations',
+      'Risk Management Plan (RMP)',
+      'PV Database Overview',
+      'AI in Pharmacovigilance',
+      'Interview Preparation & Resume Building'
+    ]
   },
   {
-    id: 'medical-coding', name: 'Medical Coding', duration: '3 months',
-    description: 'Medical coding training and CPC exam preparation covering ICD-10, CPT, HCPCS, medical billing, revenue cycle management and anatomy.',
-    topics: ['ICD-10, CPT, HCPCS Systems', 'Medical Billing & RCM', 'AR Calling / Analyst Training', 'Anatomy & Physiology Basics']
+    id: 'regulatory-affairs',
+    name: 'Advanced Drug Regulatory Affairs Global Certification Program',
+    shortName: 'Drug Regulatory Affairs',
+    price: '₹10,000',
+    badge: 'Global Certification',
+    icon: 'solid-file-alt',
+    description: 'A structured introduction to global submissions, product registration, compliance and regulatory documentation.',
+    topics: [
+      'Introduction to Regulatory Affairs',
+      'FDA / EMA / CDSCO / ICH Guidelines',
+      'Drug Approval Process',
+      'CTD & eCTD Submission',
+      'ANDA / NDA / DMF Basics',
+      'Regulatory Documentation',
+      'Product Registration',
+      'Labeling & Packaging Regulations',
+      'GMP / GLP / GCP Compliance',
+      'Medical Device Regulatory Affairs',
+      'Regulatory Publishing',
+      'AI in Regulatory Affairs',
+      'SOP & Technical Documentation',
+      'Interview Preparation & Resume Building'
+    ]
+  },
+  {
+    id: 'clinical-data-management',
+    name: 'Advanced Clinical Data Management Global Certification Program',
+    shortName: 'Clinical Data Management',
+    price: '₹8,000',
+    badge: 'Global Certification',
+    icon: 'solid-laptop-medical',
+    description: 'End-to-end clinical data training covering CRFs, EDC workflows, quality review, standards and database lock.',
+    topics: [
+      'Introduction to CDM',
+      'CRF Designing',
+      'Data Collection & Entry',
+      'Query Management',
+      'Data Validation & Cleaning',
+      'Database Lock Process',
+      'Clinical Trial Data Flow',
+      'EDC Tools Training',
+      'CDISC Standards Basics',
+      'SDTM & CDASH Introduction',
+      'Clinical SAS / Advanced Excel',
+      'AI in Clinical Data Management',
+      'GCP & Regulatory Compliance',
+      'Interview Preparation & Resume Building'
+    ]
+  },
+  {
+    id: 'ai-pharma-healthcare',
+    name: 'AI in Pharma & Healthcare Global Certification Program',
+    shortName: 'AI in Pharma & Healthcare',
+    price: '₹12,000',
+    badge: 'Future-Ready Skills',
+    icon: 'solid-heartbeat',
+    description: 'Industry-focused AI foundations and tools applied across pharma research, safety, writing and healthcare analytics.',
+    topics: [
+      'Introduction to AI in Pharma & Healthcare',
+      'AI & Machine Learning Basics',
+      'AI in Clinical Research',
+      'AI in Pharmacovigilance',
+      'AI in Drug Discovery',
+      'AI in Regulatory Affairs',
+      'AI in Medical Writing',
+      'AI in Clinical Data Management',
+      'AI in Healthcare Analytics',
+      'AI in Medical Devices',
+      'ChatGPT & AI Tools for Pharma',
+      'Data Privacy & AI Ethics',
+      'Future of AI in Healthcare Industry',
+      'Interview Preparation & Resume Building'
+    ]
+  },
+  {
+    id: 'digital-marketing',
+    name: 'Global Digital Marketing PG Program',
+    shortName: 'Digital Marketing',
+    price: '₹25,000',
+    badge: 'All-in-One PG Program',
+    icon: 'solid-bullseye',
+    description: 'A broad digital program covering web, apps, audience growth, paid media, creative work and client acquisition.',
+    topics: [
+      'Web Development',
+      'App Development',
+      'SEO',
+      'Social Media Marketing',
+      'Performance Marketing',
+      'Lead Generation',
+      'Programmatic Advertising',
+      'AI in Digital Marketing',
+      'Content Creation & Branding',
+      'Email Marketing Automation',
+      'Graphic Designing',
+      'Freelancing & Client Acquisition'
+    ]
+  },
+  {
+    id: 'pharmaceutical-management',
+    name: 'Global Pharmaceutical Management Certification Program',
+    shortName: 'Pharmaceutical Management',
+    price: '₹15,000',
+    badge: 'Management Program',
+    icon: 'solid-briefcase',
+    description: 'Commercial and leadership training for pharma marketing, sales, products, customers and market strategy.',
+    topics: [
+      'Pharmaceutical Marketing Management',
+      'Pharma Sales Management',
+      'Product Management',
+      'Doctor Communication Skills',
+      'Territory Management',
+      'Pharma Brand Management',
+      'Digital Marketing in Pharma',
+      'AI in Pharmaceutical Management',
+      'CRM & Customer Handling',
+      'Market Research & Analytics',
+      'Pharma Supply Chain Basics',
+      'Leadership & Communication Skills',
+      'Regulatory & Compliance Basics',
+      'Interview Preparation & Resume Building'
+    ]
+  },
+  {
+    id: 'medical-coding',
+    name: 'Advanced Medical Coding Certification Program',
+    shortName: 'Medical Coding',
+    price: '₹30,000',
+    badge: 'Career-Focused Program',
+    icon: 'solid-user-md',
+    description: 'Career-focused preparation covering coding certification, healthcare revenue cycles, billing and documentation roles.',
+    topics: [
+      'CPC Certification',
+      'Medical Billing',
+      'RCM (Revenue Cycle Management)',
+      'AR Calling / AR Analyst',
+      'Medical Scribing'
+    ]
+  },
+  {
+    id: 'pharmaceutical-industrial',
+    name: 'Global Pharmaceutical Industrial Program',
+    shortName: 'Pharmaceutical Industrial',
+    price: '₹10,000',
+    badge: 'Industry Program',
+    icon: 'solid-vial',
+    description: 'A cross-functional view of core pharmaceutical departments, quality systems, documentation and compliance.',
+    topics: [
+      'Quality Assurance (QA)',
+      'Quality Control (QC)',
+      'Production',
+      'Research & Development (R&D)',
+      'GMP / GLP Guidelines',
+      'Documentation Practices',
+      'AI in Pharma Industry',
+      'Regulatory Compliance',
+      'Interview Preparation & Resume Building'
+    ]
+  },
+  {
+    id: 'forex-stock-market',
+    name: 'Global Forex & Stock Market Certification Program',
+    shortName: 'Forex & Stock Market',
+    price: '₹10,000',
+    badge: 'Market Skills Program',
+    icon: 'solid-wallet',
+    description: 'Market education covering technical frameworks, trading discipline, derivatives and guided live-market sessions.',
+    topics: [
+      'Forex Market Basics',
+      'Indian Stock Market Basics',
+      'Technical Analysis',
+      'Price Action Trading',
+      'Smart Money Concepts (SMC)',
+      'ICT Trading Concepts',
+      'Indicators Strategy',
+      'Futures & Options',
+      'Risk Management',
+      'Trading Psychology',
+      'AI in Trading',
+      'Commodity & Gold Trading',
+      'Live Market Sessions'
+    ]
   }
 ] as const;

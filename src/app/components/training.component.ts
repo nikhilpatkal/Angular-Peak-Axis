@@ -5,6 +5,7 @@ import { SITE } from '../site';
 @Component({ selector: 'app-training', templateUrl: './training.component.html', changeDetection: ChangeDetectionStrategy.OnPush })
 export class TrainingComponent {
   readonly site = SITE;
+  readonly courses = COURSES;
   readonly selectedCourse = signal<(typeof COURSES)[number] | null>(null);
   private readonly dialog = viewChild.required<ElementRef<HTMLDialogElement>>('syllabusDialog');
 
