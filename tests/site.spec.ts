@@ -48,6 +48,25 @@ test('job filter switches between fresher and experienced roles', async ({ page 
   await expect(page.getByRole('heading', { name: 'Pharmacovigilance Trainee' })).toBeVisible();
 });
 
+test('course category filters update the responsive course grid', async ({ page }) => {
+  await page.goto('/');
+  const filters = page.getByRole('group', { name: 'Filter courses by category' });
+  const businessFilter = filters.getByRole('button', { name: 'Business & Finance' });
+  await businessFilter.click();
+  await expect(businessFilter).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.getByRole('heading', { name: 'Global Digital Marketing PG Program' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Global Forex & Stock Market Certification Program' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Global PG Diploma in Clinical Research' })).toBeHidden();
+  await expect(page.getByText('2 programs', { exact: true })).toBeVisible();
+
+  await filters.getByRole('button', { name: 'All' }).click();
+  await expect(page.getByRole('heading', { name: 'Global PG Diploma in Clinical Research' })).toBeVisible();
+  await expect(page.getByText('10 programs', { exact: true })).toBeVisible();
+  const courseRail = page.getByLabel('Certification programs; swipe or use the arrow buttons to view more');
+  await page.getByRole('button', { name: 'Show more courses' }).click();
+  await expect.poll(() => courseRail.evaluate(element => element.scrollLeft)).toBeGreaterThan(0);
+});
+
 test('course dialog supports downloads, Escape and focus restoration', async ({ page }) => {
   await page.goto('/');
   const trigger = page.getByRole('button', { name: 'Syllabus' }).first();
@@ -55,6 +74,9 @@ test('course dialog supports downloads, Escape and focus restoration', async ({ 
   const dialog = page.getByRole('dialog', { name: 'Course overview' });
   await expect(dialog).toBeVisible();
   await expect(dialog).toContainText('Clinical Trial Management (CTM)');
+  await expect(dialog).not.toContainText('Program fee');
+  await expect(dialog).not.toContainText('₹');
+  await expect(dialog.getByRole('link', { name: 'Enquire Now' })).toBeVisible();
   const downloadEvent = page.waitForEvent('download');
   await dialog.getByRole('link', { name: 'Download course overview' }).click();
   expect((await downloadEvent).suggestedFilename()).toBe('clinical-research.txt');

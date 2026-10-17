@@ -81,16 +81,14 @@ await writeFile('public/sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<
 // Build every downloadable overview from the same course data used by the UI.
 // Keep this plain-text output ASCII-safe so it opens cleanly in any editor.
 for (const course of COURSES) {
-  const textPrice = course.price.replace('₹', 'INR ');
   const overview = [
     site.shortName,
     `${course.name} - Course overview`,
-    `Program Fee: ${textPrice}`,
     '',
     'MODULES',
     ...course.topics.map(topic => `- ${topic}`),
     '',
-    'Contact our team for intake dates, delivery format and enrolment details.',
+    'Contact our team for course fees, intake dates, delivery format and enrolment details.',
     `Email: ${site.email}`,
     `Phone: ${site.phone}`,
     `Website: ${canonical}`,
