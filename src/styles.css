@@ -5,8 +5,6 @@
   font-display: swap;
   src: url('/fonts/inter-latin-wght-normal.woff2') format('woff2');
 }
-@font-face { font-family: Poppins; font-style: normal; font-weight: 500; font-display: swap; src: url('/fonts/poppins-latin-500-normal.woff2') format('woff2'); }
-@font-face { font-family: Poppins; font-style: normal; font-weight: 600; font-display: swap; src: url('/fonts/poppins-latin-600-normal.woff2') format('woff2'); }
 @font-face { font-family: Poppins; font-style: normal; font-weight: 700; font-display: swap; src: url('/fonts/poppins-latin-700-normal.woff2') format('woff2'); }
 @font-face { font-family: Poppins; font-style: normal; font-weight: 800; font-display: swap; src: url('/fonts/poppins-latin-800-normal.woff2') format('woff2'); }
 
@@ -18,6 +16,7 @@ html { scroll-behavior: smooth; scroll-padding-top: 6rem; }
 body { @apply bg-slate-50 text-slate-700 font-sans antialiased overflow-x-hidden; }
 ::selection { background-color: #0a2540; color: #fff; }
 app-root { display: block; }
+app-home-page, app-course-page, app-not-found-page { display: block; }
 app-header { display: contents; }
 app-hero, app-trust, app-success-stories, app-about, app-training, app-services, app-opportunities, app-registration, app-testimonials, app-footer { display: block; }
 [hidden] { display: none !important; }

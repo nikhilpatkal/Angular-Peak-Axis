@@ -6,13 +6,13 @@
     <div class="mb-10 text-center">
       <span class="mb-4 inline-flex items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-100 px-3 py-1 text-xs font-bold uppercase tracking-widest text-emerald-700 shadow-sm">
         <svg class="icon" aria-hidden="true" focusable="false"><use href="/icons.svg#solid-medal" /></svg>
-        100% Placement Record
+        Career-Focused Programs
       </span>
       <h2 id="success-stories-heading" class="mb-4 font-heading text-3xl font-extrabold tracking-tight text-slate-900 md:text-5xl">
-        Our Success <span class="text-brand-blue">Stories</span>
+        Explore Career <span class="text-brand-blue">Pathways</span>
       </h2>
       <p class="mx-auto mt-4 max-w-2xl text-lg text-slate-600">
-        Join hundreds of our alumni who have successfully launched their careers in top pharmaceutical, healthcare and IT companies worldwide.
+        Browse training areas designed to build relevant knowledge, practical skills and career readiness.
       </p>
     </div>
 
@@ -26,30 +26,30 @@
       class="rounded-3xl"
       role="region"
       aria-roledescription="carousel"
-      aria-label="Student placement success stories"
+      aria-label="Career pathway carousel"
     >
       <div class="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <p class="text-sm font-medium text-slate-500">
-          Stories advance automatically every 3 seconds. Hover, focus or touch to pause.
+          Pathways advance automatically every 3 seconds. Hover, focus or touch to pause.
         </p>
         <div class="flex items-center gap-2">
-          <button type="button" (click)="previousStory()" aria-label="Show previous success story" class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-brand-blue shadow-sm transition-colors hover:border-brand-blue hover:bg-brand-accent">
+          <button type="button" (click)="previousStory()" aria-label="Show previous career pathway" class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-brand-blue shadow-sm transition-colors hover:border-brand-blue hover:bg-brand-accent">
             <svg class="icon rotate-180" aria-hidden="true" focusable="false"><use href="/icons.svg#solid-arrow-right" /></svg>
           </button>
           <span class="min-w-16 text-center text-xs font-bold text-slate-500">{{ activeStory() + 1 }} / {{ stories.length }}</span>
-          <button type="button" (click)="nextStory()" aria-label="Show next success story" class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-brand-blue shadow-sm transition-colors hover:border-brand-blue hover:bg-brand-accent">
+          <button type="button" (click)="nextStory()" aria-label="Show next career pathway" class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-brand-blue shadow-sm transition-colors hover:border-brand-blue hover:bg-brand-accent">
             <svg class="icon" aria-hidden="true" focusable="false"><use href="/icons.svg#solid-arrow-right" /></svg>
           </button>
         </div>
       </div>
 
-      <div #storiesTrack class="no-scrollbar flex snap-x snap-mandatory gap-6 overflow-x-auto pb-5" tabindex="0" aria-label="Scrollable student success stories">
+      <div #storiesTrack class="no-scrollbar flex snap-x snap-mandatory gap-6 overflow-x-auto pb-5" tabindex="0" aria-label="Scrollable career pathways">
         @for (story of stories; track story.name; let index = $index) {
           <article class="w-[86%] shrink-0 snap-start overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-premium sm:w-[calc((100%-1.5rem)/2)] lg:w-[calc((100%-3rem)/3)]">
             <div [class]="index % 2 === 0 ? 'relative h-24 bg-gradient-to-r from-brand-blue to-brand-lightBlue' : 'relative h-24 bg-gradient-to-r from-slate-700 to-slate-800'">
               <div class="absolute right-3 top-3 rounded bg-white/20 px-2 py-1 text-[10px] font-bold text-white backdrop-blur-sm">
                 <svg class="icon text-brand-gold" aria-hidden="true" focusable="false"><use href="/icons.svg#solid-check-circle" /></svg>
-                Placed
+                Program
               </div>
               <img [src]="story.image" [alt]="story.name" class="absolute -bottom-8 left-1/2 h-20 w-20 -translate-x-1/2 rounded-full border-4 border-white object-cover shadow-sm" width="256" height="256" loading="lazy" decoding="async">
             </div>
@@ -61,7 +61,7 @@
                 <div class="flex items-center justify-between gap-3">
                   <span class="text-xs font-medium text-slate-400">
                     <svg class="icon mr-1 w-4" aria-hidden="true" focusable="false"><use href="/icons.svg#regular-building" /></svg>
-                    Company
+                    Focus
                   </span>
                   <span class="font-bold text-slate-800">{{ story.company }}</span>
                 </div>
@@ -69,7 +69,7 @@
                 <div class="flex items-center justify-between gap-3">
                   <span class="text-xs font-medium text-slate-400">
                     <svg class="icon mr-1 w-4" aria-hidden="true" focusable="false"><use href="/icons.svg#solid-wallet" /></svg>
-                    Package
+                    Next step
                   </span>
                   <span class="rounded bg-emerald-50 px-2 py-0.5 font-bold text-emerald-600">{{ story.package }}</span>
                 </div>
@@ -79,12 +79,12 @@
         }
       </div>
 
-      <div class="mt-2 flex justify-center gap-2" aria-label="Choose a success story">
+      <div class="mt-2 flex justify-center gap-2" aria-label="Choose a career pathway">
         @for (story of stories; track story.name; let index = $index) {
           <button
             type="button"
             (click)="goToStory(index)"
-            [attr.aria-label]="'Show ' + story.name + '\'s success story'"
+            [attr.aria-label]="'Show ' + story.name + ' career pathway'"
             [attr.aria-current]="activeStory() === index ? 'true' : null"
             [class]="activeStory() === index ? 'h-2.5 w-8 rounded-full bg-brand-blue transition-all' : 'h-2.5 w-2.5 rounded-full bg-slate-300 transition-all hover:bg-brand-lightBlue'"
           ></button>
@@ -94,7 +94,7 @@
 
     <div class="mt-10 text-center">
       <a href="#opportunities" class="inline-flex items-center gap-2 rounded-full bg-brand-blue px-8 py-3 font-bold text-white shadow-md transition-all hover:-translate-y-0.5 hover:bg-brand-lightBlue">
-        Start Your Success Story Today
+        Explore All Training Programs
         <svg class="icon text-sm" aria-hidden="true" focusable="false"><use href="/icons.svg#solid-arrow-right" /></svg>
       </a>
     </div>

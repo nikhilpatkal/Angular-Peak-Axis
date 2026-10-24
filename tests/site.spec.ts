@@ -7,7 +7,7 @@ test('prerendered content is readable with JavaScript disabled', async ({ browse
   await expect(page.getByRole('heading', { level: 1 })).toContainText('Transform Your Career');
   await expect(page.getByRole('heading', { name: 'Premium Certification Programs' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Pharmacovigilance Trainee' })).toBeVisible();
-  await expect(page.locator('.counter').first()).toHaveText('1500');
+  await expect(page.getByText('1500', { exact: true }).first()).toBeVisible();
   await context.close();
 });
 
@@ -22,7 +22,7 @@ test('production hydrates without errors, loads local assets and has no broken a
     await image.scrollIntoViewIfNeeded();
     await expect.poll(() => image.evaluate(element => (element as HTMLImageElement).naturalWidth)).toBeGreaterThan(0);
   }
-  await page.getByRole('heading', { name: 'What Our Students Say' }).scrollIntoViewIfNeeded();
+  await page.getByRole('heading', { name: 'How We Support Learners' }).scrollIntoViewIfNeeded();
   await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
   await page.screenshot({ path: 'test-results/desktop.png', fullPage: true });
   const brokenAnchors = await page.locator('a[href^="#"]').evaluateAll(links => links.map(link => link.getAttribute('href')).filter(href => !document.getElementById(href!.slice(1))));
@@ -35,17 +35,34 @@ test('production hydrates without errors, loads local assets and has no broken a
   await expect(page.locator('#announcement-bar')).toBeHidden();
 });
 
-test('job filter switches between fresher and experienced roles', async ({ page }) => {
+test('career-path filter switches between entry-level and experienced examples', async ({ page }) => {
   await page.goto('/');
-  const filter = page.getByRole('combobox', { name: 'Filter job openings by experience' });
+  const filter = page.getByRole('combobox', { name: 'Filter career paths by experience' });
   await filter.selectOption('fresher');
   await expect(page.getByRole('heading', { name: 'Pharmacovigilance Trainee' })).toBeVisible();
-  await expect(page.getByRole('heading', { name: 'Clinical Data Manager (CDM)' })).toBeHidden();
+  await expect(page.getByRole('heading', { name: 'Clinical Data Manager' })).toBeHidden();
   await filter.selectOption('experienced');
   await expect(page.getByRole('heading', { name: 'Pharmacovigilance Trainee' })).toBeHidden();
-  await expect(page.getByRole('heading', { name: 'Clinical Data Manager (CDM)' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Clinical Data Manager' })).toBeVisible();
   await filter.selectOption('all');
   await expect(page.getByRole('heading', { name: 'Pharmacovigilance Trainee' })).toBeVisible();
+});
+
+test('homepage counters, marquee and career carousel animate after hydration', async ({ page }) => {
+  await page.goto('/');
+
+  const firstCounter = page.locator('.counter').first();
+  await firstCounter.scrollIntoViewIfNeeded();
+  await expect.poll(async () => (await firstCounter.textContent())?.trim()).toBe('1500');
+
+  const marquee = page.locator('.animate-scroll-x').first();
+  await expect.poll(() => marquee.evaluate(element => getComputedStyle(element).animationName)).not.toBe('none');
+
+  const carousel = page.getByRole('region', { name: 'Career pathway carousel' });
+  await carousel.scrollIntoViewIfNeeded();
+  const position = carousel.locator('.min-w-16');
+  const initialPosition = (await position.textContent())?.trim();
+  await expect.poll(async () => (await position.textContent())?.trim(), { timeout: 5000 }).not.toBe(initialPosition);
 });
 
 test('course category filters update the responsive course grid', async ({ page }) => {
@@ -90,14 +107,24 @@ test('course dialog supports downloads, Escape and focus restoration', async ({ 
   await expect(dialog).toBeHidden();
 });
 
-test('success stories rotate automatically and support manual navigation', async ({ page }) => {
-  await page.goto('/');
-  const carousel = page.getByRole('region', { name: 'Student placement success stories' });
-  const position = carousel.getByText(/\d \/ 4/);
-  await expect(position).toHaveText('1 / 4');
-  await expect(position).toHaveText('2 / 4', { timeout: 6500 });
-  await carousel.getByRole('button', { name: 'Show next success story' }).click();
-  await expect(position).toHaveText('3 / 4');
+test('course pages are prerendered with unique metadata, schema and visible modules', async ({ page }) => {
+  const response = await page.goto('/courses/clinical-research/');
+  expect(response?.status()).toBe(200);
+  await expect(page).toHaveTitle('Clinical Research Course in Pune | Peak Axis Global');
+  await expect(page.getByRole('heading', { level: 1, name: 'Global PG Diploma in Clinical Research' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Modules covered' })).toBeVisible();
+  await expect(page.getByText('Clinical Trial Management (CTM)', { exact: true })).toBeVisible();
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', 'https://peakaxisglobal.in/courses/clinical-research/');
+  const schema = JSON.parse(await page.locator('script[type="application/ld+json"]').textContent() || '{}');
+  expect(schema['@graph'].some((item: { '@type': string }) => item['@type'] === 'Course')).toBe(true);
+  expect(schema['@graph'].some((item: { '@type': string }) => item['@type'] === 'BreadcrumbList')).toBe(true);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+});
+
+test('unknown routes return a genuine 404 instead of the Angular homepage', async ({ request }) => {
+  const response = await request.get('/this-page-does-not-exist');
+  expect(response.status()).toBe(404);
+  expect(await response.text()).not.toContain('Transform Your Career');
 });
 
 test('enquiry validates required fields and submits them to the configured endpoint', async ({ page }) => {

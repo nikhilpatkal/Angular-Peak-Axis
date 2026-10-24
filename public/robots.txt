@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.peakaxisglobal.com/sitemap.xml
+Sitemap: https://peakaxisglobal.in/sitemap.xml

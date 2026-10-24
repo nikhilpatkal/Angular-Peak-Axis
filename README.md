@@ -1,6 +1,6 @@
 # Peak Axis Global — Angular static website
 
-The supplied `index.html` has been converted into an Angular 22 application. The original file is retained as a reference; the application source is in `src/`. The layout, branding, courses, services, testimonials and job cards have been preserved.
+Peak Axis Global is an Angular 22 static site for `https://peakaxisglobal.in`. The homepage and ten course routes are prerendered for Cloudflare Pages, while Angular hydration provides the course filter, enquiry form, dialog, and mobile navigation.
 
 ## Run locally
 
@@ -11,7 +11,7 @@ npm ci
 npm start
 ```
 
-Open `http://localhost:4200`. On Windows systems where PowerShell blocks `npm.ps1`, use `npm.cmd` instead of `npm`.
+Open `http://localhost:4200`. On Windows systems where PowerShell blocks `npm.ps1`, use `npm.cmd`.
 
 ## Build and verify
 
@@ -19,42 +19,40 @@ Open `http://localhost:4200`. On Windows systems where PowerShell blocks `npm.ps
 npm run build
 npm run check:seo
 npm run test:e2e
+npm run measure:performance
 npm run preview
 ```
 
-The production preview is at `http://127.0.0.1:4173`. Browser tests use the installed Microsoft Edge on Windows. On other systems, install Playwright Chromium with `npx playwright install chromium`. Set `PLAYWRIGHT_CHANNEL=chromium` to use Playwright's Chromium on Windows as well.
+The production preview is at `http://127.0.0.1:4173`. Browser tests use installed Microsoft Edge on Windows. On other systems, install Playwright Chromium and set `PLAYWRIGHT_CHANNEL=chromium` if needed.
 
-Deploy **only `dist/peak-axis/browser/`** to any static host. Angular prerenders the complete page at build time using `outputMode: "static"`; production hosting needs no Node.js application, API or database. Unknown paths should return HTTP 404 instead of being rewritten to the homepage. Set the host's document root to the browser output directory.
+Deploy **only `dist/peak-axis/browser/`**. Production hosting needs no Node.js server. The top-level `404.html` prevents unknown paths from being rewritten to the homepage. `public/_headers` caches fingerprinted JS/CSS for one year, mutable images/fonts for one week, and revalidates HTML and crawl files. `public/_redirects` permanently redirects `/index.html` to `/`; hostname redirects require Cloudflare account configuration.
 
-`public/_headers` provides caching rules for hosts that support this format, including Netlify and Cloudflare Pages. On other hosts, configure equivalent rules: cache fingerprinted JavaScript/CSS for one year, images/fonts for one week, and revalidate HTML. Enable Brotli or gzip and redirect HTTP and alternative domain variants to the chosen HTTPS canonical domain.
+See [`docs/seo-deployment-handoff.md`](docs/seo-deployment-handoff.md) for deployment, redirect, Search Console, and rollback instructions.
 
-## Content and contact details
+## Content and configuration
 
-- `site.config.json`: domain, title, description, email, phone, WhatsApp, address and social URLs. The domain and contact details from the supplied file are retained as requested. WhatsApp links consistently use the displayed number.
-- `src/app/components/`: standalone page sections. Edit their HTML to update visible content.
-- `src/app/courses.ts`: course overview topics and descriptions used by dialogs, downloads and structured data. Update this alongside the visible course cards when changing a course.
-- `src/styles.css` and `tailwind.config.cjs`: local fonts, accessibility styles and the existing navy/gold design.
-- `public/images/`, `public/fonts/`, `public/icons.svg`: local assets. Images use WebP, intrinsic dimensions, lazy loading below the hero and a responsive high-priority hero image. Two broken URLs from the supplied file were replaced.
+- `site.config.json`: canonical domain, contact details, address, social links, and enquiry endpoint.
+- `src/app/courses.ts`: the ten program descriptions and modules used by cards, dialogs, course pages, downloads, sitemap, and schema.
+- `src/app/pages/`: the homepage, course page, and client-side not-found view.
+- `src/app/seo.ts`: canonical metadata and accurate EducationalOrganization, WebSite, WebPage, ItemList, Course, and BreadcrumbList JSON-LD.
+- `src/app/components/`: visible page sections and interactions.
+- `public/images/`, `public/fonts/`, `public/icons.svg`: local assets. The transparent hero uses responsive WebP sources with PNG fallbacks; the displayed logo is a resized WebP. Original source images remain available.
 
-`npm start` and `npm run build` regenerate `src/index.html`, `public/robots.txt`, `public/sitemap.xml` and downloadable course overviews from the configuration. Edit the configuration rather than the generated files. `node scripts/prepare-assets.mjs` can restore the supplied assets from installed font/icon packages and the source image URLs; ordinary builds use the checked-in assets and do not download fonts or images. Font and icon licenses are included in `public/licenses/`.
+`npm start` and `npm run build` regenerate `src/index.html`, `public/robots.txt`, `public/sitemap.xml`, and downloadable course overviews. `npm run optimize:images` recreates the optimized hero and logo WebP files. `node scripts/prepare-assets.mjs` restores the local fonts/icons and any missing stock images.
 
-## Static enquiry behavior
+## Enquiry behavior and privacy
 
-The original registration UI simulated payment, registration IDs and email delivery. The Angular version validates the enquiry fields and prepares a `mailto:` draft containing those details. The visitor opens the draft, attaches a resume in their email application and sends it. Syllabus buttons open keyboard-accessible dialogs with real, downloadable **text course overviews** based on the supplied course topics.
+The form validates candidate fields and PDF/DOC/DOCX resumes up to 3 MB, then submits to the configured Google Apps Script endpoint. The integration stores enquiry data in Google Sheets and resumes in a restricted Google Drive folder; see `docs/google-apps-script/`.
 
-The static site processes no payments, stores no candidate data, uploads no resumes and sends no automated emails. Policy and unavailable resource links open contact email; replace them with real document URLs when supplied. Fees, job availability, testimonials, review claims and social profiles retain the supplied content and should be reviewed when publishing updates.
+The site does not process payments. Approved privacy, terms, and refund-policy text is still required from the owner, so the footer offers explicit email requests until reviewed public policies are supplied. Do not publish placement guarantees, ratings, review totals, employer affiliations, salaries, testimonials, accreditation, or outcome figures without evidence and permission.
 
 ## Performance and SEO
 
-- Complete prerendered HTML, including headings, courses, job cards and final counters, is readable without JavaScript.
-- Zoneless Angular, `OnPush` components and hydration keep interactions small and reuse the prerendered document. Display-only sections use `hydrate never`, so their component JavaScript is not downloaded on the production page. Interactive sections hydrate normally. When adding Angular interactions to a static section, remove its `hydrate never` boundary in `app.component.ts`.
-- Tailwind is compiled and purged during the build. There are no runtime Tailwind, Google Fonts, Font Awesome CDN or image-host requests.
-- Production builds minify code, inline critical CSS, fingerprint bundles and enforce size budgets.
-- Canonical URL, descriptive title/description, Open Graph and Twitter metadata, a local social image, Organization/WebSite/WebPage/Course JSON-LD, `robots.txt` and a one-page sitemap are generated together.
-- Sections have semantic headings, navigation and form labels; a skip link, visible keyboard focus, native dialog focus handling and reduced-motion styles are included. No scroll animation hides content.
+- Eleven indexable routes are prerendered with visible content when JavaScript is disabled.
+- Every page has a unique title, description, canonical URL, social metadata, and route-appropriate JSON-LD.
+- `robots.txt` and `sitemap.xml` use only the canonical `.in` origin and list the homepage plus ten course pages.
+- Zoneless Angular, `OnPush`, lazy route chunks, deferred display-only components, local fonts, purged Tailwind CSS, hashed production bundles, and size budgets keep runtime work bounded.
+- The LCP hero is eager/high priority with accurate responsive candidates; below-the-fold raster images are lazy-loaded.
+- Focus styles, landmarks, labels, dialog behavior, reduced-motion handling, intrinsic image dimensions, and a skip link support accessibility.
 
-`check:seo` inspects the actual production HTML, schema, local assets and anchors. The six browser tests cover JavaScript-disabled rendering, hydration and resource errors, the job filter, course dialogs/downloads, enquiry validation and mobile navigation. Screenshots are saved to `test-results/`.
-
-For launch, submit `/sitemap.xml` to Google Search Console and validate the deployed canonical URL and structured data. These improvements make the content easier to crawl; search ranking also depends on content quality, local business information and external signals.
-
-References: [Angular static output](https://angular.dev/guide/ssr#generate-a-fully-static-application), [Angular hydration](https://angular.dev/guide/hydration), [Google JavaScript SEO guidance](https://developers.google.com/search/docs/crawling-indexing/javascript/javascript-seo-basics).
+`check:seo` validates generated HTML for every indexable route, structured data, domain consistency, local assets, and crawl files. Playwright tests cover no-JavaScript content, hydration and resources, filters, course dialogs/pages, enquiry validation, mobile navigation, and genuine 404 handling.

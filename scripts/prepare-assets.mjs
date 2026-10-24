@@ -8,7 +8,7 @@ await mkdir('public/fonts', { recursive: true });
 await mkdir('public/licenses', { recursive: true });
 const fonts = [
   ['@fontsource-variable/inter', 'inter-latin-wght-normal.woff2'],
-  ...[500, 600, 700, 800].map(weight => ['@fontsource/poppins', `poppins-latin-${weight}-normal.woff2`])
+  ...[700, 800].map(weight => ['@fontsource/poppins', `poppins-latin-${weight}-normal.woff2`])
 ];
 for (const [pkg, file] of fonts) await copyFile(`node_modules/${pkg}/files/${file}`, `public/fonts/${file}`);
 for (const pkg of ['@fontsource-variable/inter', '@fontsource/poppins']) {

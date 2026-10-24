@@ -10,33 +10,6 @@ const image = `${base.origin}/images/social-cover.webp`;
 const escape = value => String(value).replace(/[&<>"']/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[character]);
 // Read course data from a single source shared with the course overview dialog.
 const { COURSES } = await import('../src/app/courses.ts');
-const organizationId = `${canonical}#organization`;
-const structuredData = {
-  '@context': 'https://schema.org',
-  '@graph': [
-    {
-      '@type': ['EducationalOrganization', 'EmploymentAgency'], '@id': organizationId,
-      name: site.name, url: canonical, description: site.description,
-      email: site.email, telephone: site.phone,
-      address: { '@type': 'PostalAddress', ...site.address },
-      contactPoint: { '@type': 'ContactPoint', telephone: site.phone, email: site.email, contactType: 'customer service', availableLanguage: ['English'] },
-      sameAs: Object.values(site.social)
-    },
-    { '@type': 'WebSite', '@id': `${canonical}#website`, name: site.shortName, url: canonical, publisher: { '@id': organizationId }, inLanguage: 'en-IN' },
-    {
-      '@type': 'WebPage', '@id': `${canonical}#webpage`, url: canonical, name: site.title,
-      description: site.description, isPartOf: { '@id': `${canonical}#website` },
-      about: { '@id': organizationId }, inLanguage: 'en-IN'
-    },
-    {
-      '@type': 'ItemList', name: 'Training programs at Peak Axis Global',
-      itemListElement: COURSES.map((course, index) => ({
-        '@type': 'ListItem', position: index + 1,
-        item: { '@type': 'Course', '@id': `${canonical}#${course.id}`, name: course.name, description: course.description, url: `${canonical}#${course.id}`, provider: { '@id': organizationId } }
-      }))
-    }
-  ]
-};
 await mkdir('src', { recursive: true });
 await mkdir('public/programs', { recursive: true });
 await writeFile('src/index.html', `<!doctype html>
@@ -69,7 +42,6 @@ await writeFile('src/index.html', `<!doctype html>
   <meta name="twitter:description" content="${escape(site.description)}">
   <meta name="twitter:image" content="${image}">
   <meta name="twitter:image:alt" content="Students and professionals collaborating">
-  <script type="application/ld+json">${JSON.stringify(structuredData).replace(/</g, '\\u003c')}</script>
 </head>
 <body>
   <app-root></app-root>
@@ -77,7 +49,8 @@ await writeFile('src/index.html', `<!doctype html>
 </html>
 `);
 await writeFile('public/robots.txt', `User-agent: *\nAllow: /\n\nSitemap: ${base.origin}/sitemap.xml\n`);
-await writeFile('public/sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>${escape(canonical)}</loc></url></urlset>\n`);
+const sitemapUrls = [canonical, ...COURSES.map(course => `${base.origin}/courses/${course.id}/`)];
+await writeFile('public/sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemapUrls.map(url => `  <url><loc>${escape(url)}</loc></url>`).join('\n')}\n</urlset>\n`);
 // Build every downloadable overview from the same course data used by the UI.
 // Keep this plain-text output ASCII-safe so it opens cleanly in any editor.
 for (const course of COURSES) {

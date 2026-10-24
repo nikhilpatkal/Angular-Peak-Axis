@@ -11,31 +11,31 @@ export class SuccessStoriesComponent {
   readonly activeStory = signal(0);
   readonly stories = [
     {
-      name: 'Priya Sharma',
-      role: 'CRC Coordinator',
-      company: 'Innoplexus',
-      package: '3.5 LPA',
+      name: 'Clinical Research',
+      role: 'Career Pathway',
+      company: 'Clinical operations',
+      package: 'View course',
       image: '/images/photo-1573496359142-b8d87734a5a2.webp'
     },
     {
-      name: 'Rahul Verma',
-      role: 'Medical Coder',
-      company: 'Ruby Hall',
-      package: '2.8 LPA',
+      name: 'Medical Coding',
+      role: 'Career Pathway',
+      company: 'Healthcare documentation',
+      package: 'View course',
       image: '/images/photo-1506277886164-e25aa3f4ef7f.webp'
     },
     {
-      name: 'Sneha Patil',
-      role: 'RA Associate',
-      company: 'BioPharma Inc',
-      package: '4.2 LPA',
+      name: 'Regulatory Affairs',
+      role: 'Career Pathway',
+      company: 'Regulatory operations',
+      package: 'View course',
       image: '/images/photo-1580489944761-15a19d654956.webp'
     },
     {
-      name: 'Karan Mehta',
-      role: 'PV Trainee',
-      company: 'Accenture',
-      package: '3.0 LPA',
+      name: 'Pharmacovigilance',
+      role: 'Career Pathway',
+      company: 'Drug safety',
+      package: 'View course',
       image: '/images/photo-1519085360753-af0119f7cbe7.webp'
     }
   ] as const;
