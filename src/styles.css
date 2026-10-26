@@ -18,7 +18,7 @@ body { @apply bg-slate-50 text-slate-700 font-sans antialiased overflow-x-hidden
 app-root { display: block; }
 app-home-page, app-course-page, app-not-found-page { display: block; }
 app-header { display: contents; }
-app-hero, app-trust, app-success-stories, app-about, app-training, app-services, app-opportunities, app-registration, app-testimonials, app-footer { display: block; }
+app-hero, app-trust, app-success-stories, app-placement-students, app-about, app-training, app-services, app-opportunities, app-registration, app-testimonials, app-footer { display: block; }
 [hidden] { display: none !important; }
 .icon { display: inline-block; height: 1em; width: 1em; vertical-align: -0.125em; fill: currentColor; flex-shrink: 0; }
 .glass { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }

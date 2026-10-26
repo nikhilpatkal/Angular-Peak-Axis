@@ -17,6 +17,16 @@ test('production hydrates without errors, loads local assets and has no broken a
   page.on('pageerror', error => errors.push(error.message));
   page.on('response', response => { if (response.status() >= 400) failed.push(response.url()); });
   await page.goto('/');
+  const placementStories = page.getByRole('region', { name: 'Meet Our Placed Students' });
+  await expect(placementStories.getByRole('article')).toHaveCount(23);
+  await expect(placementStories.getByRole('heading', { name: 'Tejas Gayke' })).toBeVisible();
+  await expect(placementStories.getByText('Optum', { exact: true })).toBeVisible();
+  const tejasCard = placementStories.getByRole('article').filter({ has: page.getByRole('heading', { name: 'Tejas Gayke' }) });
+  const storyButton = tejasCard.getByRole('button', { name: 'Read full success story from Tejas Gayke' });
+  await storyButton.click();
+  await expect(tejasCard.getByRole('button')).toHaveAttribute('aria-expanded', 'true');
+  await expect(tejasCard).toContainText('start a career in Clinical Research.');
+  await tejasCard.getByRole('button', { name: 'Show less from Tejas Gayke' }).click();
   // Exercise lazy images before checking resource errors and capturing the full page.
   for (const image of await page.locator('img').all()) {
     await image.scrollIntoViewIfNeeded();
@@ -48,7 +58,7 @@ test('career-path filter switches between entry-level and experienced examples',
   await expect(page.getByRole('heading', { name: 'Pharmacovigilance Trainee' })).toBeVisible();
 });
 
-test('homepage counters, marquee and career carousel animate after hydration', async ({ page }) => {
+test('homepage counters, marquee and placement carousel animate after hydration', async ({ page }) => {
   await page.goto('/');
 
   const firstCounter = page.locator('.counter').first();
@@ -58,11 +68,16 @@ test('homepage counters, marquee and career carousel animate after hydration', a
   const marquee = page.locator('.animate-scroll-x').first();
   await expect.poll(() => marquee.evaluate(element => getComputedStyle(element).animationName)).not.toBe('none');
 
-  const carousel = page.getByRole('region', { name: 'Career pathway carousel' });
+  const carousel = page.getByRole('region', { name: 'Student placement carousel' });
   await carousel.scrollIntoViewIfNeeded();
   const position = carousel.locator('.min-w-16');
   const initialPosition = (await position.textContent())?.trim();
   await expect.poll(async () => (await position.textContent())?.trim(), { timeout: 5000 }).not.toBe(initialPosition);
+
+  await carousel.getByRole('button', { name: 'Show previous placed student' }).focus();
+  const pausedPosition = (await position.textContent())?.trim();
+  await page.waitForTimeout(3200);
+  await expect(position).toHaveText(pausedPosition!);
 });
 
 test('course category filters update the responsive course grid', async ({ page }) => {

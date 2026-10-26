@@ -1,0 +1,104 @@
+<section id="placement-students" role="region" aria-labelledby="placement-students-heading" class="relative overflow-hidden bg-slate-50 py-20">
+  <div class="absolute right-0 top-0 h-64 w-64 -translate-y-1/2 translate-x-1/2 rounded-full bg-brand-gold/10 blur-3xl" aria-hidden="true"></div>
+  <div class="absolute bottom-0 left-0 h-80 w-80 -translate-x-1/4 translate-y-1/2 rounded-full bg-brand-blue/10 blur-3xl" aria-hidden="true"></div>
+  <div class="absolute left-[8%] top-1/3 h-16 w-16 rounded-full bg-brand-lightBlue/10 blur-xl" aria-hidden="true"></div>
+  <div class="absolute bottom-12 right-[10%] h-20 w-20 rounded-full bg-brand-gold/10 blur-xl" aria-hidden="true"></div>
+
+  <div class="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="mb-10 text-center">
+      <span class="mb-4 inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-bold uppercase tracking-widest text-emerald-700">
+        <svg class="icon" aria-hidden="true" focusable="false"><use href="/icons.svg#solid-medal" /></svg>
+        Student Placements
+      </span>
+      <h2 id="placement-students-heading" class="font-heading text-3xl font-extrabold tracking-tight text-slate-900 md:text-5xl">
+        Meet Our <span class="text-brand-blue">Placed Students</span>
+      </h2>
+      <p class="mx-auto mt-3 max-w-2xl text-base text-slate-600 md:text-lg">
+        Real career journeys from students who took their next step with Peak Axis Global.
+      </p>
+    </div>
+
+    <div
+      (mouseenter)="setHovered(true)"
+      (mouseleave)="setHovered(false)"
+      (focusin)="setFocused(true)"
+      (focusout)="onFocusOut($event)"
+      (pointerdown)="setPointerDown(true)"
+      (pointerup)="setPointerDown(false)"
+      (pointercancel)="setPointerDown(false)"
+      class="rounded-3xl"
+      role="region"
+      aria-roledescription="carousel"
+      aria-label="Student placement carousel"
+    >
+      <div class="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <p class="flex items-center gap-2 text-sm font-medium text-slate-600">
+          Students advance every 3 seconds. Hover, focus or touch to pause.
+          <span class="h-2 w-2 shrink-0 rounded-full bg-brand-gold" aria-hidden="true"></span>
+        </p>
+        <div class="flex items-center gap-2">
+          <button type="button" (click)="previousStudent()" aria-label="Show previous placed student" class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-brand-blue shadow-sm transition-colors hover:border-brand-blue hover:bg-brand-accent">
+            <svg class="icon rotate-180" aria-hidden="true" focusable="false"><use href="/icons.svg#solid-arrow-right" /></svg>
+          </button>
+          <span class="min-w-16 text-center text-xs font-bold text-brand-blue">{{ activeStudent() + 1 }} / {{ students.length }}</span>
+          <button type="button" (click)="nextStudent()" aria-label="Show next placed student" class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-brand-blue shadow-sm transition-colors hover:border-brand-blue hover:bg-brand-accent">
+            <svg class="icon" aria-hidden="true" focusable="false"><use href="/icons.svg#solid-arrow-right" /></svg>
+          </button>
+        </div>
+      </div>
+
+      <div #studentsTrack (scroll)="updateActiveStudent()" class="no-scrollbar flex snap-x snap-mandatory gap-5 overflow-x-auto scroll-smooth pb-5" tabindex="0" aria-label="Scrollable placed students">
+        @for (student of students; track student.name) {
+          <article class="flex w-[86%] shrink-0 snap-start flex-col overflow-hidden rounded-2xl border border-slate-200 border-t-2 border-t-brand-gold bg-white shadow-md shadow-slate-900/5 transition-shadow hover:shadow-lg hover:shadow-slate-900/10 sm:w-[calc((100%-1.25rem)/2)] lg:w-[calc((100%-2.5rem)/3)]">
+            <div class="relative h-44 overflow-hidden bg-slate-100 sm:h-48">
+              <img
+                [src]="student.image"
+                alt=""
+                aria-hidden="true"
+                class="absolute inset-0 h-full w-full scale-110 object-cover opacity-35 blur-xl"
+                width="480"
+                height="480"
+                loading="lazy"
+                decoding="async"
+              >
+              <img
+                [src]="student.image"
+                [alt]="'Photo of ' + student.name"
+                class="relative h-full w-full object-contain drop-shadow-sm"
+                width="480"
+                height="480"
+                loading="lazy"
+                decoding="async"
+              >
+              <div class="absolute bottom-2 right-2 inline-flex items-center gap-1.5 rounded-full bg-brand-blue px-3 py-1.5 text-xs font-bold text-white shadow-lg">
+                <svg class="icon text-brand-gold" aria-hidden="true" focusable="false"><use href="/icons.svg#solid-medal" /></svg>
+                Placed
+              </div>
+            </div>
+            <div class="flex flex-1 flex-col px-5 pb-4 pt-4">
+              <h3 class="font-heading text-lg font-bold leading-snug text-slate-900">{{ student.name }}</h3>
+              <p class="mt-1 text-sm font-semibold text-brand-blue">{{ student.role }}</p>
+              <div class="mt-3 flex items-center gap-2 rounded-lg bg-slate-50 px-3 py-2">
+                <svg class="icon text-brand-gold" aria-hidden="true" focusable="false"><use href="/icons.svg#regular-building" /></svg>
+                <p class="min-w-0 text-xs text-slate-500">Placed at <span class="font-semibold text-slate-800">{{ student.company }}</span></p>
+              </div>
+              <blockquote [class.line-clamp-4]="expandedStudent() !== student.name" class="mt-3 flex-1 text-sm leading-relaxed text-slate-600">
+                {{ student.review }}
+              </blockquote>
+              <button
+                type="button"
+                (click)="toggleReview(student.name)"
+                [attr.aria-expanded]="expandedStudent() === student.name"
+                [attr.aria-label]="(expandedStudent() === student.name ? 'Show less from ' : 'Read full success story from ') + student.name"
+                class="mt-3 inline-flex items-center justify-center gap-2 border-t border-slate-100 pt-3 text-sm font-semibold text-brand-blue transition-colors hover:text-brand-lightBlue"
+              >
+                {{ expandedStudent() === student.name ? 'Show Less' : 'Read Success Story' }}
+                <svg class="icon text-xs" [class.rotate-90]="expandedStudent() === student.name" aria-hidden="true" focusable="false"><use href="/icons.svg#solid-arrow-right" /></svg>
+              </button>
+            </div>
+          </article>
+        }
+      </div>
+    </div>
+  </div>
+</section>

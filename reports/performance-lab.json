@@ -1,106 +1,106 @@
 {
-  "measuredAt": "2026-10-23T19:52:23.526Z",
+  "measuredAt": "2026-10-24T08:11:54.734Z",
   "environment": "Local production preview, headless mobile viewport (390x844), unthrottled",
   "note": "These are repeatable local lab indicators, not Lighthouse scores or real-user Core Web Vitals/INP.",
   "results": [
     {
       "path": "/",
-      "lcpMs": 1744,
+      "lcpMs": 1328,
       "cls": 0,
-      "tbtMs": 97,
-      "domContentLoadedMs": 1155,
-      "loadMs": 1176,
-      "transferredBytes": 806111
+      "tbtMs": 50,
+      "domContentLoadedMs": 635,
+      "loadMs": 658,
+      "transferredBytes": 876554
     },
     {
       "path": "/courses/clinical-research/",
-      "lcpMs": 520,
+      "lcpMs": 336,
       "cls": 0,
-      "tbtMs": 73,
-      "domContentLoadedMs": 549,
-      "loadMs": 562,
-      "transferredBytes": 482399
+      "tbtMs": 22,
+      "domContentLoadedMs": 159,
+      "loadMs": 169,
+      "transferredBytes": 488200
     },
     {
       "path": "/courses/pharmacovigilance/",
-      "lcpMs": 288,
+      "lcpMs": 244,
       "cls": 0,
-      "tbtMs": 42,
-      "domContentLoadedMs": 343,
-      "loadMs": 353,
-      "transferredBytes": 484802
+      "tbtMs": 16,
+      "domContentLoadedMs": 138,
+      "loadMs": 146,
+      "transferredBytes": 490603
     },
     {
       "path": "/courses/regulatory-affairs/",
-      "lcpMs": 224,
+      "lcpMs": 280,
       "cls": 0,
-      "tbtMs": 21,
-      "domContentLoadedMs": 263,
-      "loadMs": 271,
-      "transferredBytes": 484074
+      "tbtMs": 29,
+      "domContentLoadedMs": 151,
+      "loadMs": 163,
+      "transferredBytes": 489875
     },
     {
       "path": "/courses/clinical-data-management/",
-      "lcpMs": 308,
+      "lcpMs": 216,
       "cls": 0,
-      "tbtMs": 25,
-      "domContentLoadedMs": 344,
-      "loadMs": 354,
-      "transferredBytes": 484603
+      "tbtMs": 5,
+      "domContentLoadedMs": 124,
+      "loadMs": 133,
+      "transferredBytes": 489880
     },
     {
       "path": "/courses/ai-pharma-healthcare/",
-      "lcpMs": 324,
+      "lcpMs": 224,
       "cls": 0,
-      "tbtMs": 97,
-      "domContentLoadedMs": 400,
-      "loadMs": 413,
-      "transferredBytes": 484142
+      "tbtMs": 3,
+      "domContentLoadedMs": 114,
+      "loadMs": 123,
+      "transferredBytes": 489943
     },
     {
       "path": "/courses/digital-marketing/",
-      "lcpMs": 540,
+      "lcpMs": 212,
       "cls": 0,
-      "tbtMs": 63,
-      "domContentLoadedMs": 758,
-      "loadMs": 770,
-      "transferredBytes": 483268
+      "tbtMs": 5,
+      "domContentLoadedMs": 129,
+      "loadMs": 136,
+      "transferredBytes": 489069
     },
     {
       "path": "/courses/pharmaceutical-management/",
-      "lcpMs": 308,
+      "lcpMs": 180,
       "cls": 0,
-      "tbtMs": 53,
-      "domContentLoadedMs": 387,
-      "loadMs": 401,
-      "transferredBytes": 484627
+      "tbtMs": 0,
+      "domContentLoadedMs": 93,
+      "loadMs": 100,
+      "transferredBytes": 489904
     },
     {
       "path": "/courses/medical-coding/",
-      "lcpMs": 348,
+      "lcpMs": 212,
       "cls": 0,
-      "tbtMs": 73,
-      "domContentLoadedMs": 444,
-      "loadMs": 457,
-      "transferredBytes": 481724
+      "tbtMs": 2,
+      "domContentLoadedMs": 119,
+      "loadMs": 127,
+      "transferredBytes": 487525
     },
     {
       "path": "/courses/pharmaceutical-industrial/",
-      "lcpMs": 396,
-      "cls": 0.0178,
-      "tbtMs": 62,
-      "domContentLoadedMs": 569,
-      "loadMs": 585,
-      "transferredBytes": 482513
+      "lcpMs": 168,
+      "cls": 0,
+      "tbtMs": 0,
+      "domContentLoadedMs": 92,
+      "loadMs": 98,
+      "transferredBytes": 488314
     },
     {
       "path": "/courses/forex-stock-market/",
-      "lcpMs": 340,
+      "lcpMs": 252,
       "cls": 0,
-      "tbtMs": 55,
-      "domContentLoadedMs": 421,
-      "loadMs": 435,
-      "transferredBytes": 484172
+      "tbtMs": 14,
+      "domContentLoadedMs": 143,
+      "loadMs": 151,
+      "transferredBytes": 489973
     }
   ]
 }
