@@ -63,7 +63,7 @@
     <div class="md:col-span-2"><label class="form-label" for="qualification">Qualification &amp; specialization *</label><input id="qualification" name="qualification" placeholder="e.g., B.Pharm, M.Sc Microbiology" maxlength="150" required class="form-field"></div>
     <div><label class="form-label" for="experience">Experience level *</label><select id="experience" name="experience" class="form-field" required><option>Fresher</option><option>1-3 Years</option><option>3+ Years</option></select></div>
     <div><label class="form-label" for="graduation">Graduation year</label><input id="graduation" name="graduation" type="number" min="1950" max="2100" class="form-field"></div>
-    <div class="md:col-span-2"><label class="form-label" for="role">Preferred job role or course *</label><input id="role" name="role" maxlength="150" required class="form-field"></div>
+    <div class="md:col-span-2"><label class="form-label" for="role">Preferred job role or course *</label><input id="role" name="role" maxlength="150" required class="form-field" [value]="syllabusCourse ? 'Syllabus request: ' + syllabusCourse.name : ''"></div>
     <div class="md:col-span-2">
       <label class="form-label" for="resume">Updated resume *</label>
       <input id="resume" name="resume" type="file" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" required class="form-field file:mr-4 file:rounded-lg file:border-0 file:bg-brand-accent file:px-4 file:py-2 file:text-sm file:font-bold file:text-brand-blue">
@@ -83,6 +83,9 @@
     @if (submitted()) {
       <h4 class="font-bold text-emerald-800">Enquiry submitted successfully</h4>
       <p class="mt-2 text-sm text-emerald-700">Thank you for contacting Peak Axis Global. Our team will review your details and get in touch with you.</p>
+      @if (syllabusCourse) {
+        <a [href]="'/programs/' + syllabusCourse.id + '.txt'" download class="mt-4 inline-flex rounded-xl bg-brand-blue px-5 py-3 font-bold text-white hover:bg-brand-lightBlue">Download Syllabus</a>
+      }
     } @else if (submissionError()) {
       <h4 class="font-bold text-red-800">Submission unsuccessful</h4>
       <p class="mt-2 text-sm text-red-700">{{ submissionError() }}</p>

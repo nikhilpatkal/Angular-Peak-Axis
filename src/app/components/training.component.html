@@ -145,9 +145,11 @@
         </ul>
 
         <div class="mt-7">
-          <a [href]="'/programs/' + course.id + '.txt'" download class="block rounded-xl border-2 border-brand-blue/15 p-3 text-center text-sm font-bold text-brand-blue transition-colors hover:border-brand-blue hover:bg-brand-accent">
-            <svg class="icon mr-1.5" aria-hidden="true" focusable="false"><use href="/icons.svg#solid-download" /></svg>
-            Download course overview
+          <a
+            [href]="'/?syllabus=' + course.id + '#registration'"
+            (click)="closeSyllabus()"
+            class="block rounded-xl border-2 border-brand-blue/15 p-3 text-center text-sm font-bold text-brand-blue transition-colors hover:border-brand-blue hover:bg-brand-accent">
+            Enquire Now / Get Course Syllabus
           </a>
         </div>
       </div>

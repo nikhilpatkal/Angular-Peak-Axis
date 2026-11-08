@@ -78,9 +78,10 @@ function doPost(event) {
     const fullName = requiredText(params.fullName, 'Full name', 100);
     const email = requiredText(params.email, 'Email address', 254);
     const phone = requiredText(params.phone, 'WhatsApp number', 20);
+    const isSyllabusRequest = params.inquiryType === 'syllabus';
     const location = requiredText(params.location, 'Current location', 100);
-    const qualification = requiredText(params.qualification, 'Qualification', 150);
-    const experience = requiredText(params.experience, 'Experience level', 50);
+    const qualification = isSyllabusRequest ? cleanText(params.qualification, 150) : requiredText(params.qualification, 'Qualification', 150);
+    const experience = isSyllabusRequest ? cleanText(params.experience, 50) : requiredText(params.experience, 'Experience level', 50);
     const graduation = cleanText(params.graduation, 4);
     const role = requiredText(params.role, 'Preferred job role or course', 150);
     const source = cleanText(params.source, 500);
@@ -88,44 +89,52 @@ function doPost(event) {
     if (!params.consent) throw new Error('Consent is required.');
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) throw new Error('Please enter a valid email address.');
 
-    const originalResumeName = requiredText(params.resumeName, 'Resume name', 255);
-    const resumeMimeType = requiredText(params.resumeMimeType, 'Resume type', 150).toLowerCase();
-    const resumeBase64 = requiredText(params.resumeBase64, 'Resume file', 5 * 1024 * 1024);
-    const resumeType = RESUME_TYPES[resumeMimeType];
+    let originalResumeName = '';
+    let resumeMimeType = '';
+    let resumeBytes = null;
+    let resumeType = null;
 
-    if (!resumeType) throw new Error('Resume must be a PDF, DOC or DOCX file.');
+    if (!isSyllabusRequest) {
+      originalResumeName = requiredText(params.resumeName, 'Resume name', 255);
+      resumeMimeType = requiredText(params.resumeMimeType, 'Resume type', 150).toLowerCase();
+      const resumeBase64 = requiredText(params.resumeBase64, 'Resume file', 5 * 1024 * 1024);
+      resumeType = RESUME_TYPES[resumeMimeType];
 
-    const originalExtension = originalResumeName.split('.').pop().toLowerCase();
-    if (originalExtension !== resumeType.extension) {
-      throw new Error('The resume file extension does not match its file type.');
-    }
+      if (!resumeType) throw new Error('Resume must be a PDF, DOC or DOCX file.');
 
-    let resumeBytes;
-    try {
-      resumeBytes = Utilities.base64Decode(resumeBase64);
-    } catch (error) {
-      throw new Error('The resume could not be decoded. Please select the file again.');
-    }
+      const originalExtension = originalResumeName.split('.').pop().toLowerCase();
+      if (originalExtension !== resumeType.extension) {
+        throw new Error('The resume file extension does not match its file type.');
+      }
 
-    if (!resumeBytes.length) throw new Error('The selected resume is empty.');
-    if (resumeBytes.length > MAX_RESUME_BYTES) throw new Error('Resume must not be larger than 3 MB.');
-    if (!hasSignature(resumeBytes, resumeType.signature)) {
-      throw new Error('The uploaded resume does not appear to be a valid ' + resumeType.extension.toUpperCase() + ' file.');
+      try {
+        resumeBytes = Utilities.base64Decode(resumeBase64);
+      } catch (error) {
+        throw new Error('The resume could not be decoded. Please select the file again.');
+      }
+
+      if (!resumeBytes.length) throw new Error('The selected resume is empty.');
+      if (resumeBytes.length > MAX_RESUME_BYTES) throw new Error('Resume must not be larger than 3 MB.');
+      if (!hasSignature(resumeBytes, resumeType.signature)) {
+        throw new Error('The uploaded resume does not appear to be a valid ' + resumeType.extension.toUpperCase() + ' file.');
+      }
     }
 
     const spreadsheet = SpreadsheetApp.openById(SPREADSHEET_ID);
     const sheet = spreadsheet.getSheetByName(SHEET_NAME) || spreadsheet.getSheets()[0];
     if (!sheet) throw new Error('No worksheet was found in the enquiry spreadsheet.');
 
-    const folder = DriveApp.getFolderById(RESUME_FOLDER_ID);
     const enquiryId = 'PA-' + Utilities.getUuid().slice(0, 8).toUpperCase();
-    const savedResumeName = enquiryId + '_' + safeFileName(fullName) + '.' + resumeType.extension;
 
     lock = LockService.getScriptLock();
     lock.waitLock(10000);
 
-    const blob = Utilities.newBlob(resumeBytes, resumeMimeType, savedResumeName);
-    resumeFile = folder.createFile(blob);
+    if (!isSyllabusRequest) {
+      const folder = DriveApp.getFolderById(RESUME_FOLDER_ID);
+      const savedResumeName = enquiryId + '_' + safeFileName(fullName) + '.' + resumeType.extension;
+      const blob = Utilities.newBlob(resumeBytes, resumeMimeType, savedResumeName);
+      resumeFile = folder.createFile(blob);
+    }
 
     ensureHeaders(sheet);
     sheet.appendRow([
@@ -142,12 +151,14 @@ function doPost(event) {
       'Yes',
       'New',
       safeCell(source),
-      resumeFile.getUrl()
+      resumeFile ? resumeFile.getUrl() : ''
     ]);
 
     return jsonResponse({
       success: true,
-      message: 'Your enquiry and resume were saved successfully.',
+      message: isSyllabusRequest
+        ? 'Your syllabus request was saved successfully.'
+        : 'Your enquiry and resume were saved successfully.',
       enquiryId: enquiryId
     });
   } catch (error) {

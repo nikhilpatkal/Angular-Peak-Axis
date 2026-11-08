@@ -1,4 +1,6 @@
-import { ChangeDetectionStrategy, Component, ElementRef, signal, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, inject, signal, viewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { COURSES } from '../courses';
 import { SITE } from '../site';
 
 @Component({
@@ -7,6 +9,7 @@ import { SITE } from '../site';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RegistrationComponent {
+  private readonly route = inject(ActivatedRoute);
   private readonly maximumResumeSize = 3 * 1024 * 1024;
   private readonly allowedResumeTypes = new Set([
     'application/pdf',
@@ -14,6 +17,7 @@ export class RegistrationComponent {
     'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
   ]);
   readonly site = SITE;
+  readonly syllabusCourse = COURSES.find(course => course.id === this.route.snapshot.queryParamMap.get('syllabus')) ?? null;
   readonly submitting = signal(false);
   readonly submitted = signal(false);
   readonly submissionError = signal('');

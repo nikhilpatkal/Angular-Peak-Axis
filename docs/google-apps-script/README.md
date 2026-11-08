@@ -112,7 +112,8 @@ Only people with permission to the Drive file or folder can open it.
 The script provides:
 
 - `doGet()`: health check for the published endpoint.
-- `doPost(event)`: validates and saves an enquiry.
+- `doPost(event)`: validates and saves a candidate enquiry, including requests
+  for a course syllabus submitted through the main enquiry form.
 - `authorizeServices()`: one-time Sheet and Drive permission test.
 
 ## 4. Configure the Apps Script manifest
@@ -208,7 +209,8 @@ The same rules are applied in both the website and Apps Script:
 - Files larger than 3 MB are rejected.
 - The MIME type must match an allowed format.
 - The file signature must match its claimed type.
-- A resume is required for every new enquiry.
+- A resume is required for candidate enquiries. Syllabus requests are recorded
+  in the same Sheet without a resume.
 
 To change the size limit, update both locations:
 
@@ -225,6 +227,13 @@ const MAX_RESUME_BYTES = 3 * 1024 * 1024;
 Deploy both the website and a new Apps Script version after changing the limit.
 
 ## 9. End-to-end test
+
+For a syllabus request, open any course page and select **Enquire Now / Get
+Course Syllabus**. The website opens the main candidate enquiry form with the
+requested course prefilled. Submit all required candidate details and a resume;
+the **Download Syllabus** link appears only after the enquiry is saved. Verify
+the course, contact details, location, consent, status, submission source and
+resume URL are recorded in the same Sheet.
 
 1. Open the deployed website.
 2. Complete every required candidate field.

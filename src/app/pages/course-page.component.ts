@@ -14,6 +14,7 @@ export class CoursePageComponent {
   private readonly seo = inject(SeoService);
   readonly site = SITE;
   readonly course = COURSES.find(item => item.id === this.route.snapshot.data['courseId'])!;
+
   constructor() {
     this.seo.setCourse(this.course);
   }

@@ -1,20 +1,20 @@
 export const COURSES = [
   {
     id: 'clinical-research',
-    name: 'Global PG Diploma in Clinical Research',
+    name: 'Global PG Diploma in Clinical Research (All-in-One)',
     shortName: 'Clinical Research',
     category: 'Clinical & Safety',
     badge: 'All-in-One PG Diploma',
     icon: 'solid-microscope',
-    description: 'An integrated clinical research program spanning trial management, safety, data, writing and emerging AI applications.',
+    description: 'An integrated clinical research program spanning core research practice, data, safety, writing, regulatory affairs, AI and professional development.',
     topics: [
-      'Clinical Trial Management (CTM)',
+      'Clinical Research (CR)',
       'Clinical Data Management (CDM)',
       'Pharmacovigilance (PV)',
-      'Medical Writing',
-      'ICH-GCP Certification',
-      'AI in Pharma Clinical Research',
-      'Medical Devices in Clinical Research'
+      'Medical Writing (MW)',
+      'Drug Regulatory Affairs (DRA)',
+      'AI in Clinical Research (ACR)',
+      'Personality Development (PD)'
     ]
   },
   {
