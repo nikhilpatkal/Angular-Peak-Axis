@@ -23,7 +23,7 @@ test('production hydrates without errors, loads local assets and has no broken a
   await expect(page.getByRole('link', { name: 'Telegram', exact: true })).toHaveAttribute('href', 'https://t.me/peakaxisglobalofficialpage');
   await expect(page.getByRole('link', { name: 'YouTube', exact: true })).toHaveAttribute('href', 'https://youtube.com/@peakaxisglobalcareers?si=855c4HZZJT1mFYSw');
   const placementStories = page.getByRole('region', { name: 'Meet Our Recently Placed Students' });
-  await expect(placementStories.getByRole('article')).toHaveCount(23);
+  await expect(placementStories.getByRole('article')).toHaveCount(26);
   await expect(placementStories.getByRole('heading', { name: 'Tejas Gayke' })).toBeVisible();
   await expect(placementStories.getByText('Optum', { exact: true })).toBeVisible();
   const tejasCard = placementStories.getByRole('article').filter({ has: page.getByRole('heading', { name: 'Tejas Gayke' }) });
@@ -162,6 +162,24 @@ test('learner support section shows the supplied named testimonials', async ({ p
   await expect(testimonials.getByText('PeakAxis Global has been a great support in my career journey.')).toBeVisible();
   await expect(testimonials.getByRole('heading', { name: 'Dr. Sanvedana Kambale' })).toBeVisible();
   await expect(testimonials.getByText('My experience with PeakAxis Global was very helpful and informative.')).toBeVisible();
+});
+
+test('placed students section includes the final three profiles from the supplied document', async ({ page }) => {
+  await page.goto('/');
+  const placementStories = page.getByRole('region', { name: 'Student placement carousel' });
+  const sonali = placementStories.getByRole('article').filter({ has: page.getByRole('heading', { name: 'Sonali Gote' }) });
+  const manisha = placementStories.getByRole('article').filter({ has: page.getByRole('heading', { name: 'Manisha Sable' }) });
+  const parwej = placementStories.getByRole('article').filter({ has: page.getByRole('heading', { name: 'Parwej Jamdar' }) });
+
+  await expect(sonali).toContainText('Clinical Records');
+  await expect(sonali).toContainText('Balanced Wellbeing India Pvt. Ltd.');
+  await expect(sonali.getByRole('img', { name: 'Photo of Sonali Gote' })).toBeVisible();
+  await expect(manisha).toContainText('Clinical Records');
+  await expect(manisha).toContainText('Balanced Wellbeing India Pvt. Ltd.');
+  await expect(manisha.getByRole('img', { name: 'Photo of Manisha Sable' })).toBeVisible();
+  await expect(parwej).toContainText('Clinical Research Associate');
+  await expect(parwej).toContainText('Klin Health Bio');
+  await expect(parwej.getByRole('img', { name: 'Photo unavailable for Parwej Jamdar' })).toContainText('PJ');
 });
 
 test('syllabus request uses the main enquiry form and unlocks the selected download after save', async ({ page }) => {

@@ -161,6 +161,27 @@ const PLACEMENT_STUDENTS = [
     company: 'Klin Health Bio',
     image: '/images/placed-students/aman-naikwadi.webp',
     review: 'My experience with PeakAxis Global was very good. The training was useful, and the team guided me properly throughout the process. Their support helped me gain confidence and prepare for better career opportunities. Thank you to the entire team for your guidance and support!'
+  },
+  {
+    name: 'Sonali Gote',
+    role: 'Clinical Records',
+    company: 'Balanced Wellbeing India Pvt. Ltd.',
+    image: '/images/placed-students/sonali-gote.webp',
+    review: 'I’m happy to have started my career as a Clinical Record Specialist with the support of PeakAxis Global. The team provided helpful guidance and interview preparation throughout the process. Thank you for your continuous support and for helping me take this important step in my career!'
+  },
+  {
+    name: 'Manisha Sable',
+    role: 'Clinical Records',
+    company: 'Balanced Wellbeing India Pvt. Ltd.',
+    image: '/images/placed-students/manisha-sable.webp',
+    review: 'I had a great experience with PeakAxis Global. The team provided proper guidance, quality training, and helpful interview preparation. Their support helped me feel more confident about my career. I’m truly thankful to the entire team for their efforts and encouragement!'
+  },
+  {
+    name: 'Parwej Jamdar',
+    role: 'Clinical Research Associate',
+    company: 'Klin Health Bio',
+    image: null,
+    review: 'My experience with PeakAxis Global was excellent. The team provided good training, proper guidance, and interview preparation. Their support helped me improve my confidence and move closer to my career goals. I’m truly thankful to the entire team for their efforts and support!'
   }
 ] as const;
 
